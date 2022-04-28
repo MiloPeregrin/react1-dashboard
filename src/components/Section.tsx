@@ -1,28 +1,32 @@
+import { TodoItemType } from "../App";
 import Card from "./Card";
-import TodoItem from "./TodoItem";
 
 interface ISection {
-  title: string;
+  todos: TodoItemType[];
+  title: "Ready" | "In Progress" | "Finished";
 }
 
-const dummy = [
-  { taskName: "task1", taskDetail: "taskDetail" },
-  { taskName: "task2", taskDetail: "taskDetail2" },
-];
-
-const Section = ({ title }: ISection) => {
+const Section = ({ title, todos }: ISection) => {
   return (
     <Card>
       <div className="flex flex-col w-full items-center h-2/3">
         <p className="font-bold">{title}</p>
         <ul className="flex flex-col w-full">
-          {dummy.map((item) => {
+          {todos.map((item) => {
             return (
               <li className="flex flex-col">
-                <TodoItem>
-                  <p className="flex justify-center">{item.taskName}</p>
-                  <p>{item.taskDetail}</p>
-                </TodoItem>
+                <div className="flex flex-col items-center bg-white m-2 rounded-md drop-shadow-md">
+                  <p className="flex justify-center">{item.name}</p>
+                  <p>{item.detail}</p>
+                  {title === "Ready" && <button>{`>>`}</button>}
+                  {title === "In Progress" && (
+                    <div>
+                      <button>{`<<`}</button>
+                      <button>{`>>`}</button>
+                    </div>
+                  )}
+                  {title === "Finished" && <button>{`<<`}</button>}
+                </div>
               </li>
             );
           })}
