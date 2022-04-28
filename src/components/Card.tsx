@@ -4,7 +4,7 @@ interface ICard {
 
 const Card = ({ children }: ICard) => {
   return (
-    <div className="flex flex-col items-center bg-white px-8 py-8 mx-2 my-2 rounded-md drop-shadow-md w-full">
+    <div className="flex flex-col items-center bg-white px-6 py-6 mx-2 my-4 rounded-md drop-shadow-md w-full">
       {children}
     </div>
   );

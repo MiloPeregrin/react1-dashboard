@@ -1,5 +1,5 @@
 import Card from "./Card";
-import TaskItem from "./TaskItem";
+import TodoItem from "./TodoItem";
 
 interface ISection {
   title: string;
@@ -19,10 +19,10 @@ const Section = ({ title }: ISection) => {
           {dummy.map((item) => {
             return (
               <li className="flex flex-col">
-                <TaskItem>
+                <TodoItem>
                   <p className="flex justify-center">{item.taskName}</p>
                   <p>{item.taskDetail}</p>
-                </TaskItem>
+                </TodoItem>
               </li>
             );
           })}

@@ -9,7 +9,7 @@ function App() {
     console.log("new todo added");
   };
   return (
-    <div className="flex flex-col items-center bg-slate-50 h-screen w-full space-y-6">
+    <div className="flex flex-col items-center bg-slate-50 h-screen w-full">
       <header className="flex justify-center w-full max-w-7xl">
         <Card>
           <button

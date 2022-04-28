@@ -1,8 +1,8 @@
-interface ICard {
+interface ITodoItem {
   children: React.ReactNode;
 }
 
-const Card = ({ children }: ICard) => {
+const TodoItem = ({ children }: ITodoItem) => {
   return (
     <div className="flex flex-col items-center bg-white m-2 rounded-md drop-shadow-md">
       {children}
@@ -10,4 +10,4 @@ const Card = ({ children }: ICard) => {
   );
 };
 
-export default Card;
+export default TodoItem;
