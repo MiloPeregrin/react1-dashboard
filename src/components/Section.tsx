@@ -1,4 +1,5 @@
 import Card from "./Card";
+import TaskItem from "./TaskItem";
 
 interface ISection {
   title: string;
@@ -12,16 +13,16 @@ const dummy = [
 const Section = ({ title }: ISection) => {
   return (
     <Card>
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full items-center h-2/3">
         <p className="font-bold">{title}</p>
-        <ul>
+        <ul className="flex flex-col w-full">
           {dummy.map((item) => {
             return (
               <li className="flex flex-col">
-                <Card>
+                <TaskItem>
                   <p className="flex justify-center">{item.taskName}</p>
                   <p>{item.taskDetail}</p>
-                </Card>
+                </TaskItem>
               </li>
             );
           })}
