@@ -1,12 +1,10 @@
 interface ICard {
   children: React.ReactNode;
-  title?: string;
 }
 
-const Card = ({ children, title }: ICard) => {
+const Card = ({ children }: ICard) => {
   return (
-    <div className="flex flex-col items-center bg-white px-8 py-8 mt-8 rounded-md drop-shadow-md h-max w-full">
-      <p className="font-bold">{title}</p>
+    <div className="flex flex-col items-center bg-white px-8 py-8 m-2 rounded-md drop-shadow-md w-full">
       {children}
     </div>
   );

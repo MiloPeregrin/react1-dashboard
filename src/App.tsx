@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Card from "./components/Card";
+import Section from "./components/Section";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -8,8 +9,8 @@ function App() {
     console.log("new todo added");
   };
   return (
-    <div className="flex flex-col w-full items-center bg-slate-50 h-screen">
-      <header className="flex justify-center">
+    <div className="flex flex-col items-center bg-slate-50 h-screen w-full">
+      <header className="flex justify-center w-full">
         <Card>
           <button
             type="button"
@@ -20,16 +21,10 @@ function App() {
           </button>
         </Card>
       </header>
-      <div className="">
-        <Card title="Ready">
-          <div className="">TASK ITEM</div>
-        </Card>
-        <Card title="In Progress">
-          <div></div>
-        </Card>
-        <Card title="Finished">
-          <div></div>
-        </Card>
+      <div className="flex flex-col items-center w-full">
+        <Section title="Ready"></Section>
+        <Section title="In Progress"></Section>
+        <Section title="Finished"></Section>
       </div>
     </div>
   );
