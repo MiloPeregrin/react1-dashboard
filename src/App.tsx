@@ -1,29 +1,40 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Card from "./components/Card";
 import Section from "./components/Section";
 
-export type TaskItemType = { id: number; name: string; detail: string };
+export type TaskItemType = { taskName: string; taskDetail: string };
 
-const dummyTask = { id: 1, name: "task name", detail: "detail detail" };
+const dummyTask = { taskName: "task name", taskDetail: "detail detail" };
 
 function App() {
   const [readyTasks, setReadyTasks] = useState<TaskItemType[]>([]);
   const [inProgressTasks, setInProgressTasks] = useState<TaskItemType[]>([
-    { id: 1, name: "task name", detail: "detail detail" },
+    { taskName: "task name", taskDetail: "detail detail" },
   ]);
   const [finishedTasks, setFinishedTasks] = useState<TaskItemType[]>([
-    { id: 1, name: "task name", detail: "detail detail" },
+    { taskName: "task name", taskDetail: "detail detail" },
   ]);
+  const taskNameRef = useRef<HTMLInputElement>(null);
+  const taskDetailRef = useRef<HTMLInputElement>(null);
 
   const addNewTask = (data: TaskItemType) => {
     setReadyTasks((prevData) => [...prevData, data]);
   };
 
-  const submitTask = () => {
-    console.log("submit Task");
+  const submitTask = (e: any) => {
+    e.preventDefault();
+    if (taskNameRef.current && taskDetailRef.current) {
+      const task = {
+        taskName: taskNameRef.current.value,
+        taskDetail: taskDetailRef.current.value,
+      };
+      setReadyTasks((prevData) => [...prevData, task]);
+      taskNameRef.current.value = "";
+      taskDetailRef.current.value = "";
+    }
   };
 
-  const raiseTaskProgress = () => {
+  const increaseTaskProgress = () => {
     console.log("submit Task");
   };
 
@@ -42,8 +53,9 @@ function App() {
             className="flex flex-col items-center w-full space-y-1"
           >
             <div>
-              <label htmlFor="name">Task Name: </label>
+              <label htmlFor="name">Task name: </label>
               <input
+                ref={taskNameRef}
                 type="text"
                 id="name"
                 name="name"
@@ -51,8 +63,9 @@ function App() {
               />
             </div>
             <div>
-              <label htmlFor="detail">Task Detail: </label>
+              <label htmlFor="detail">Task detail: </label>
               <input
+                ref={taskDetailRef}
                 type="text"
                 id="detail"
                 name="detail"
@@ -60,9 +73,9 @@ function App() {
               />
             </div>
             <button
-              type="button"
+              type="submit"
               className="bg-pink-600 text-white p-2 rounded-md drop-shadow-md w-64 h-12"
-              onClick={() => addNewTask(dummyTask)}
+              // onClick={() => addNewTask(dummyTask)}
             >
               Add New Task
             </button>
