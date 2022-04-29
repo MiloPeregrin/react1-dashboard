@@ -2,39 +2,47 @@ import { useState } from "react";
 import Card from "./components/Card";
 import Section from "./components/Section";
 
-export type TodoItemType = { name: string; detail: string };
+export type TaskItemType = { id: number; name: string; detail: string };
 
-const dummyTodoItem = { name: "task name", detail: "detail detail" };
+const dummyTask = { id: 1, name: "task name", detail: "detail detail" };
 
 function App() {
-  const [readyTodos, setReadyTodos] = useState<TodoItemType[]>([]);
-  const [inProgressTodos, setInProgressTodos] = useState<TodoItemType[]>([
-    { name: "task name", detail: "detail detail" },
+  const [readyTasks, setReadyTasks] = useState<TaskItemType[]>([]);
+  const [inProgressTasks, setInProgressTasks] = useState<TaskItemType[]>([
+    { id: 1, name: "task name", detail: "detail detail" },
   ]);
-  const [finishedTodos, setFinishedTodos] = useState<TodoItemType[]>([
-    { name: "task name", detail: "detail detail" },
+  const [finishedTasks, setFinishedTasks] = useState<TaskItemType[]>([
+    { id: 1, name: "task name", detail: "detail detail" },
   ]);
 
-  const addNewTodoItem = (data: TodoItemType) => {
-    setReadyTodos((prevData) => [...prevData, data]);
+  const addNewTask = (data: TaskItemType) => {
+    setReadyTasks((prevData) => [...prevData, data]);
   };
 
-  const submitTodo = () => {
-    console.log("submit todo");
+  const submitTask = () => {
+    console.log("submit Task");
   };
 
-  console.log("readyTodos", readyTodos);
+  const raiseTaskProgress = () => {
+    console.log("submit Task");
+  };
+
+  const lowerTaskProgress = () => {
+    console.log("submit Task");
+  };
+
+  console.log("readyTasks", readyTasks);
 
   return (
     <div className="flex flex-col items-center bg-slate-50 h-screen w-full">
       <header className="flex justify-center w-full max-w-7xl">
         <Card>
           <form
-            onSubmit={submitTodo}
+            onSubmit={submitTask}
             className="flex flex-col items-center w-full space-y-1"
           >
             <div>
-              <label htmlFor="name">Todo Name: </label>
+              <label htmlFor="name">Task Name: </label>
               <input
                 type="text"
                 id="name"
@@ -43,7 +51,7 @@ function App() {
               />
             </div>
             <div>
-              <label htmlFor="detail">Todo Detail: </label>
+              <label htmlFor="detail">Task Detail: </label>
               <input
                 type="text"
                 id="detail"
@@ -54,17 +62,17 @@ function App() {
             <button
               type="button"
               className="bg-pink-600 text-white p-2 rounded-md drop-shadow-md w-64 h-12"
-              onClick={() => addNewTodoItem(dummyTodoItem)}
+              onClick={() => addNewTask(dummyTask)}
             >
-              Add New Todo
+              Add New Task
             </button>
           </form>
         </Card>
       </header>
       <div className="flex flex-col md:flex-row w-full max-w-7xl h-full">
-        <Section title="Ready" todos={readyTodos}></Section>
-        <Section title="In Progress" todos={inProgressTodos}></Section>
-        <Section title="Finished" todos={finishedTodos}></Section>
+        <Section title="Ready" tasks={readyTasks}></Section>
+        <Section title="In Progress" tasks={inProgressTasks}></Section>
+        <Section title="Finished" tasks={finishedTasks}></Section>
       </div>
     </div>
   );
