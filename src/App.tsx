@@ -1,25 +1,20 @@
 import { useRef, useState } from "react";
 import Card from "./components/Card";
 import Section from "./components/Section";
+import initialAppState from "./initialAppState.json";
 
 export type TaskItemType = { taskName: string; taskDetail: string };
-
-const dummyTask = { taskName: "task name", taskDetail: "detail detail" };
+export type TasksType = {
+  readyTasks: TaskItemType[];
+  inProgressTasks: TaskItemType[];
+  finishedTasks: TaskItemType[];
+};
 
 function App() {
-  const [readyTasks, setReadyTasks] = useState<TaskItemType[]>([]);
-  const [inProgressTasks, setInProgressTasks] = useState<TaskItemType[]>([
-    { taskName: "task name", taskDetail: "detail detail" },
-  ]);
-  const [finishedTasks, setFinishedTasks] = useState<TaskItemType[]>([
-    { taskName: "task name", taskDetail: "detail detail" },
-  ]);
+  console.log("initialAppState", initialAppState);
+  const [tasks, setTasks] = useState<TasksType>(initialAppState);
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
-
-  const addNewTask = (data: TaskItemType) => {
-    setReadyTasks((prevData) => [...prevData, data]);
-  };
 
   const submitTask = (e: any) => {
     e.preventDefault();
@@ -28,7 +23,7 @@ function App() {
         taskName: taskNameRef.current.value,
         taskDetail: taskDetailRef.current.value,
       };
-      setReadyTasks((prevData) => [...prevData, task]);
+      setTasks((prevData) => [...prevData, task]);
       taskNameRef.current.value = "";
       taskDetailRef.current.value = "";
     }
@@ -38,11 +33,11 @@ function App() {
     console.log("submit Task");
   };
 
-  const lowerTaskProgress = () => {
+  const decreaseTaskProgress = () => {
     console.log("submit Task");
   };
 
-  console.log("readyTasks", readyTasks);
+  console.log("readyTasks", tasks);
 
   return (
     <div className="flex flex-col items-center bg-slate-50 h-screen w-full">
@@ -50,7 +45,7 @@ function App() {
         <Card>
           <form
             onSubmit={submitTask}
-            className="flex flex-col items-center w-full space-y-1"
+            className="flex flex-col items-center w-full space-y-2"
           >
             <div>
               <label htmlFor="name">Task name: </label>
@@ -59,7 +54,7 @@ function App() {
                 type="text"
                 id="name"
                 name="name"
-                className="border-2 border-rose-600"
+                className="border-2 border-rose-600 w-64"
               />
             </div>
             <div>
@@ -69,13 +64,12 @@ function App() {
                 type="text"
                 id="detail"
                 name="detail"
-                className="border-2 border-rose-600"
+                className="border-2 border-rose-600 w-64"
               />
             </div>
             <button
               type="submit"
-              className="bg-pink-600 text-white p-2 rounded-md drop-shadow-md w-64 h-12"
-              // onClick={() => addNewTask(dummyTask)}
+              className="bg-pink-600 text-white p-2 rounded-md drop-shadow-md w-64 h-10"
             >
               Add New Task
             </button>
@@ -83,9 +77,9 @@ function App() {
         </Card>
       </header>
       <div className="flex flex-col md:flex-row w-full max-w-7xl h-full">
-        <Section title="Ready" tasks={readyTasks}></Section>
-        <Section title="In Progress" tasks={inProgressTasks}></Section>
-        <Section title="Finished" tasks={finishedTasks}></Section>
+        <Section title="Ready" tasks={tasks.readyTasks}></Section>
+        <Section title="In Progress" tasks={tasks.inProgressTasks}></Section>
+        <Section title="Finished" tasks={tasks.finishedTasks}></Section>
       </div>
     </div>
   );

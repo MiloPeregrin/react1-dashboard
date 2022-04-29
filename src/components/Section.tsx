@@ -1,4 +1,5 @@
 import { TaskItemType } from "../App";
+import Button from "./Button";
 import Card from "./Card";
 
 interface ISection {
@@ -15,17 +16,19 @@ const Section = ({ title, tasks }: ISection) => {
           {tasks.map((item) => {
             return (
               <li className="flex flex-col">
-                <div className="flex flex-col items-center bg-white m-2 rounded-md drop-shadow-md">
-                  <p className="flex justify-center">{item.name}</p>
-                  <p>{item.detail}</p>
-                  {title === "Ready" && <button>{`>>`}</button>}
+                <div className="flex flex-col items-center bg-white m-2 rounded-md drop-shadow-md border-solid border border-pink-300">
+                  <p className="flex justify-center font-medium">
+                    {item.taskName}
+                  </p>
+                  <p>{item.taskDetail}</p>
+                  {title === "Ready" && <Button>{`>>`}</Button>}
                   {title === "In Progress" && (
                     <div>
-                      <button>{`<<`}</button>
-                      <button>{`>>`}</button>
+                      <Button>{`<<`}</Button>
+                      <Button>{`>>`}</Button>
                     </div>
                   )}
-                  {title === "Finished" && <button>{`<<`}</button>}
+                  {title === "Finished" && <Button>{`<<`}</Button>}
                 </div>
               </li>
             );
