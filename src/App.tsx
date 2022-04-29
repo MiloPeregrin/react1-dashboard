@@ -18,7 +18,7 @@ function App() {
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
 
-  const submitTask = (e: any) => {
+  const submitTask = (e: React.FormEvent) => {
     e.preventDefault();
     if (taskNameRef.current && taskDetailRef.current) {
       const task = {
