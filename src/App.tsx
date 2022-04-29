@@ -4,14 +4,8 @@ import Section from "./components/Section";
 import initialAppState from "./initialAppState.json";
 
 export type TaskItemType = { taskName: string; taskDetail: string };
-// export type TasksType = {
-//   readyTasks: TaskItemType[];
-//   inProgressTasks: TaskItemType[];
-//   finishedTasks: TaskItemType[];
-// };
 
 function App() {
-  console.log("initialAppState", initialAppState);
   const [readyTasks, setReadyTasks] = useState<TaskItemType[]>(
     initialAppState.readyTasks
   );
@@ -19,7 +13,7 @@ function App() {
     initialAppState.inProgressTasks
   );
   const [finishedTasks, setFinishedTasks] = useState<TaskItemType[]>(
-    initialAppState.readyTasks
+    initialAppState.finishedTasks
   );
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
@@ -37,32 +31,24 @@ function App() {
     }
   };
 
-  // const deleteQuery = (query: T) => {
-  //   setQueries((prevQueries) => prevQueries.filter((q) => q !== query));
-  //   setSelectedRow(undefined);
-  // };
-
   const forwardTask = (currentState: string, task: TaskItemType) => {
-    console.log("task", task);
-    // if (currentState === "Ready") {
-    //   setReadyTasks();
-    //   setInProgressTasks();
-    // } else {
-    //   setInProgressTasks();
-    //   setFinishedTasks();
-    // }
+    if (currentState === "Ready") {
+      setReadyTasks((prevTasks) => prevTasks.filter((t) => t !== task));
+      setInProgressTasks((prevTasks) => [...prevTasks, task]);
+    } else {
+      setInProgressTasks((prevTasks) => prevTasks.filter((t) => t !== task));
+      setFinishedTasks((prevTasks) => [...prevTasks, task]);
+    }
   };
 
   const reverseTask = (currentState: string, task: TaskItemType) => {
-    console.log("task", task);
-
-    // if (currentState === "Finished") {
-    //   setInProgressTasks();
-    //   setFinishedTasks();
-    // } else {
-    //   setReadyTasks();
-    //   setInProgressTasks();
-    // }
+    if (currentState === "Finished") {
+      setInProgressTasks((prevTasks) => [...prevTasks, task]);
+      setFinishedTasks((prevTasks) => prevTasks.filter((t) => t !== task));
+    } else {
+      setReadyTasks((prevTasks) => [...prevTasks, task]);
+      setInProgressTasks((prevTasks) => prevTasks.filter((t) => t !== task));
+    }
   };
 
   return (

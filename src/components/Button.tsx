@@ -1,9 +1,6 @@
 interface IButton {
-  // type: string;
   children: string;
   onClick?: (data: any) => void;
-  // height?: string;
-  // width?: string;
 }
 
 const Button = ({ children, onClick }: IButton) => {
