@@ -1,26 +1,26 @@
-import { TaskItemType } from "../App";
+import { TaskItemType, TaskStateType } from "../App";
 import Card from "./Card";
 import TaskItem from "./TaskItem";
 
 interface ISection {
+  title: TaskStateType;
   tasks: TaskItemType[];
-  taskState: "Ready" | "In Progress" | "Finished";
-  forwardTask: (taskState: string, task: TaskItemType) => void;
-  reverseTask: (taskState: string, task: TaskItemType) => void;
+  forwardTask: (task: TaskItemType) => void;
+  reverseTask: (task: TaskItemType) => void;
 }
 
-const Section = ({ taskState, tasks, forwardTask, reverseTask }: ISection) => {
+const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
   return (
     <Card>
-      <div className="flex flex-col w-full items-center h-2/3">
-        <p className="font-medium text-xl">{taskState}</p>
+      <div className="flex flex-col w-full items-center">
+        <p className="font-medium text-xl">{title}</p>
         <ul className="flex flex-col w-full">
           {tasks.map((item) => {
             return (
               <li key={`${item.taskName}${Math.random()}`}>
                 <TaskItem
                   task={item}
-                  taskState={taskState}
+                  taskState={title}
                   forwardTask={forwardTask}
                   reverseTask={reverseTask}
                 />

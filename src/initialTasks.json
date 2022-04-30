@@ -1,0 +1,27 @@
+[
+  {
+    "taskState": "Ready",
+    "taskName": "Vylezt z postele",
+    "taskDetail": "Nepřijít pozdě na standup"
+  },
+  {
+    "taskState": "Ready",
+    "taskName": "Produktivní pracovní den",
+    "taskDetail": "Zlepšovat své vývojářské dovednosti"
+  },
+  {
+    "taskState": "In Progress",
+    "taskName": "Pracovat na ToDo app",
+    "taskDetail": ""
+  },
+  {
+    "taskState": "In Progress",
+    "taskName": "Java tutorial",
+    "taskDetail": "little by little one traveled far"
+  },
+  {
+    "taskState": "Finished",
+    "taskName": "Získat práci jako programátor",
+    "taskDetail": "Dělat co tě baví"
+  }
+]

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { TasksType } from "../App";
+import { TaskItemType } from "../App";
 import Card from "./Card";
 
 interface IForm {
@@ -14,11 +14,12 @@ const Form = ({ setTasks }: IForm) => {
     e.preventDefault();
     if (taskNameRef.current && taskDetailRef.current) {
       const task = {
+        taskState: "Ready",
         taskName: taskNameRef.current.value,
         taskDetail: taskDetailRef.current.value,
       };
-      setTasks((prevState: TasksType) => {
-        return { ...prevState, readyTasks: [...prevState.readyTasks, task] };
+      setTasks((prevState: TaskItemType[]) => {
+        return [...prevState, task];
       });
       taskNameRef.current.value = "";
       taskDetailRef.current.value = "";

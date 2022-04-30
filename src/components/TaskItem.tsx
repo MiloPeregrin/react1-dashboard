@@ -4,8 +4,8 @@ import Button from "./Button";
 interface ITaskItem {
   task: TaskItemType;
   taskState: "Ready" | "In Progress" | "Finished";
-  forwardTask: (taskState: string, task: TaskItemType) => void;
-  reverseTask: (taskState: string, task: TaskItemType) => void;
+  forwardTask: (task: TaskItemType) => void;
+  reverseTask: (task: TaskItemType) => void;
 }
 
 const TaskItem = ({ task, taskState, forwardTask, reverseTask }: ITaskItem) => {
@@ -16,20 +16,16 @@ const TaskItem = ({ task, taskState, forwardTask, reverseTask }: ITaskItem) => {
       </p>
       <p>{task.taskDetail}</p>
       {taskState === "Ready" && (
-        <Button onClick={() => forwardTask("Ready", task)}>{`>`}</Button>
+        <Button onClick={() => forwardTask(task)}>{`>`}</Button>
       )}
       {taskState === "In Progress" && (
         <div>
-          <Button
-            onClick={() => reverseTask("In Progress", task)}
-          >{`<`}</Button>
-          <Button
-            onClick={() => forwardTask("In Progress", task)}
-          >{`>`}</Button>
+          <Button onClick={() => reverseTask(task)}>{`<`}</Button>
+          <Button onClick={() => forwardTask(task)}>{`>`}</Button>
         </div>
       )}
       {taskState === "Finished" && (
-        <Button onClick={() => reverseTask("Finished", task)}>{`<`}</Button>
+        <Button onClick={() => reverseTask(task)}>{`<`}</Button>
       )}
     </div>
   );
