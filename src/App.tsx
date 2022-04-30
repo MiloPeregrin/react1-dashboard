@@ -3,12 +3,13 @@ import Form from "./components/Form";
 import Section from "./components/Section";
 import initialTasks from "./initialTasks.json";
 
+export type TaskStateType = "Ready" | "In Progress" | "Finished";
 export type TaskItemType = {
-  taskState: string;
+  taskState: TaskStateType | string;
+  // FIXME string literal / string types colision
   taskName: string;
   taskDetail: string;
 };
-export type TaskStateType = "Ready" | "In Progress" | "Finished";
 
 function App() {
   const [tasks, setTasks] = useState<TaskItemType[]>(initialTasks);
@@ -19,63 +20,32 @@ function App() {
     return tasks.filter((task) => task.taskState === taskState);
   };
 
+  const updateTasks = (task: TaskItemType, state: TaskStateType) => {
+    const updatedTasks = tasks.map((item) => {
+      if (item === task) {
+        return { ...item, taskState: state };
+      }
+      return item;
+    });
+    setTasks(updatedTasks);
+  };
+
   const forwardTask = (task: TaskItemType) => {
-    console.log("forwardTask");
     if (task.taskState === "Ready") {
-      task.taskState = "In Progress";
-      setTasks((prevState: TaskItemType[]) => [...prevState, task]);
+      updateTasks(task, "In Progress");
+    } else {
+      updateTasks(task, "Finished");
     }
   };
 
   const reverseTask = (task: TaskItemType) => {
-    console.log("reverseTask");
+    if (task.taskState === "Finished") {
+      updateTasks(task, "In Progress");
+    } else {
+      updateTasks(task, "Ready");
+    }
   };
 
-  // const forwardTask = (task: TaskItemType) => {
-  //   if (taskState === "Ready") {
-  //     setTasks((prevState: TaskItemType[]) => {
-  //       return {
-  //         ...prevState,
-  //         readyTasks: [...prevState.readyTasks.filter((t) => t !== task)],
-  //         inProgressTasks: [...prevState.inProgressTasks, task],
-  //       };
-  //     });
-  //   } else {
-  //     setTasks((prevState: TaskItemType[]) => {
-  //       return {
-  //         ...prevState,
-  //         inProgressTasks: [
-  //           ...prevState.inProgressTasks.filter((t) => t !== task),
-  //         ],
-  //         finishedTasks: [...prevState.finishedTasks, task],
-  //       };
-  //     });
-  //   }
-  // };
-
-  // const reverseTask = (taskState: string, task: TaskItemType) => {
-  //   if (taskState === "Finished") {
-  //     setTasks((prevState: TaskItemType[]) => {
-  //       return {
-  //         ...prevState,
-  //         finishedTasks: [...prevState.finishedTasks.filter((t) => t !== task)],
-  //         inProgressTasks: [...prevState.inProgressTasks, task],
-  //       };
-  //     });
-  //   } else {
-  //     setTasks((prevState: TaskItemType[]) => {
-  //       return {
-  //         ...prevState,
-  //         inProgressTasks: [
-  //           ...prevState.inProgressTasks.filter((t) => t !== task),
-  //         ],
-  //         readyTasks: [...prevState.readyTasks, task],
-  //       };
-  //     });
-  //   }
-  // };
-
-  console.log("tasks", tasks);
   return (
     <div className="flex flex-col items-center bg-slate-100 w-full h-full min-h-screen">
       <header className="flex justify-center w-full max-w-7xl">
