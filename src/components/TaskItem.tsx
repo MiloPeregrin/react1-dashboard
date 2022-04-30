@@ -1,9 +1,9 @@
-import { TaskItemType } from "../App";
+import { TaskItemType, TaskStateType } from "../App";
 import Button from "./Button";
 
 interface ITaskItem {
   task: TaskItemType;
-  taskState: "Ready" | "In Progress" | "Finished";
+  taskState: TaskStateType;
   forwardTask: (task: TaskItemType) => void;
   reverseTask: (task: TaskItemType) => void;
 }

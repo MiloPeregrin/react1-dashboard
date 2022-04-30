@@ -6,7 +6,7 @@ import initialTasks from "./initialTasks.json";
 export type TaskStateType = "Ready" | "In Progress" | "Finished";
 export type TaskItemType = {
   taskState: TaskStateType | string;
-  // FIXME string literal / string types colision
+  // FIXME string literal&string types colision
   taskName: string;
   taskDetail: string;
 };
