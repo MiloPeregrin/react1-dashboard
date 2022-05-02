@@ -12,9 +12,9 @@ interface ISection {
 const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
   return (
     <Card>
-      <div className="flex flex-col w-full items-center">
+      <div className="flex flex-col w-full items-center h-full">
         <p className="font-medium text-xl">{title}</p>
-        <ul className="flex flex-col w-full">
+        <ul className="flex flex-col w-full h-full">
           {tasks.map((item) => {
             return (
               <li key={`${item.taskName}${Math.random()}`}>

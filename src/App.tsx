@@ -47,7 +47,7 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center bg-slate-100 w-full h-full min-h-screen">
+    <div className="flex flex-col items-center bg-slate-100 w-full min-h-screen max-h-fit">
       <header className="flex justify-center w-full max-w-7xl">
         <Form setTasks={setTasks} />
       </header>
