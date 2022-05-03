@@ -5,14 +5,15 @@ import initialTasks from "./initialTasks.json";
 
 export type TaskStateType = "Ready" | "In Progress" | "Finished";
 export type TaskItemType = {
-  taskState: TaskStateType | string;
-  // FIXME string literal&string types colision
+  taskState: TaskStateType;
   taskName: string;
   taskDetail: string;
 };
 
 function App() {
-  const [tasks, setTasks] = useState<TaskItemType[]>(initialTasks);
+  const [tasks, setTasks] = useState<TaskItemType[]>(
+    initialTasks as TaskItemType[]
+  );
 
   const sections: TaskStateType[] = ["Ready", "In Progress", "Finished"];
 
