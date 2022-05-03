@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { TaskItemType } from "../App";
+import { TaskItemType } from "../common/types";
 import Card from "./Card";
 
 interface IForm {

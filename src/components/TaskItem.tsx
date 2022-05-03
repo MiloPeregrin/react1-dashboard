@@ -1,4 +1,4 @@
-import { TaskItemType, TaskStateType } from "../App";
+import { TaskItemType, TaskStateType } from "../common/types";
 import Button from "./Button";
 
 interface ITaskItem {
