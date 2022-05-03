@@ -11,25 +11,23 @@ interface ISection {
 
 const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
   return (
-    <Card>
-      <div className="flex flex-col w-full items-center h-full">
-        <p className="font-medium text-xl">{title}</p>
-        <ul className="flex flex-col w-full h-full">
-          {tasks.map((item) => {
-            return (
-              <li key={`${item.taskName}${Math.random()}`}>
-                <TaskItem
-                  task={item}
-                  taskState={title}
-                  forwardTask={forwardTask}
-                  reverseTask={reverseTask}
-                />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </Card>
+    <div className="flex flex-col w-full items-center h-full bg-white p-5 my-2 md:m-2 rounded-md drop-shadow-md max-h-fit">
+      <p className="font-medium text-xl">{title}</p>
+      <ul className="flex flex-col w-full h-full">
+        {tasks.map((item) => {
+          return (
+            <li key={`${item.taskName}${Math.random()}`}>
+              <TaskItem
+                task={item}
+                taskState={title}
+                forwardTask={forwardTask}
+                reverseTask={reverseTask}
+              />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 

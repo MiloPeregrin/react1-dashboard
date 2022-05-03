@@ -1,10 +1,8 @@
 import { IoNotificationsOutline } from "react-icons/io5";
-import { TaskItemType } from "../common/types";
+import { useTaskContext } from "../hooks/useTaskContext";
 
-interface IHeader {
-  tasks: TaskItemType[];
-}
-const Header = ({ tasks }: IHeader) => {
+const Header = () => {
+  const { tasks } = useTaskContext();
   const readyTasks = tasks.filter((t) => t.taskState === "Ready");
   const inProgressTasks = tasks.filter((t) => t.taskState === "In Progress");
 

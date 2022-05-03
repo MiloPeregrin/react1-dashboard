@@ -1,13 +1,10 @@
 import { TaskItemType, TaskStateType } from "../common/types";
+import { useTaskContext } from "../hooks/useTaskContext";
 import Form from "./Form";
 import Section from "./Section";
 
-interface IDashboard {
-  tasks: TaskItemType[];
-  setTasks: (value: any) => void;
-}
-
-const Dashboard = ({ tasks, setTasks }: IDashboard) => {
+const Dashboard = () => {
+  const { tasks, setTasks } = useTaskContext();
   const sections: TaskStateType[] = ["Ready", "In Progress", "Finished"];
 
   const filteredTasks = (taskState: TaskStateType) => {
@@ -44,7 +41,7 @@ const Dashboard = ({ tasks, setTasks }: IDashboard) => {
       <div className="flex justify-center w-full max-w-7xl">
         <Form setTasks={setTasks} />
       </div>
-      <div className="flex flex-col md:flex-row w-full max-w-7xl h-full">
+      <div className="flex flex-col md:flex-row w-full max-w-7xl h-full pl-2 pr-2 md:pl-0 md:pr-0">
         {sections.map((item) => {
           return (
             <Section

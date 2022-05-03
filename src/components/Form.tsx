@@ -27,42 +27,40 @@ const Form = ({ setTasks }: IForm) => {
   };
 
   return (
-    <Card>
-      <form
-        onSubmit={submitTask}
-        className="flex flex-col items-center w-full space-y-3"
-      >
-        <div className="space-y-2">
-          <div>
-            <label htmlFor="name">Task name: </label>
-            <input
-              ref={taskNameRef}
-              type="text"
-              id="name"
-              name="name"
-              className="border-2 border-rose-600 w-64"
-            />
-          </div>
-          <div>
-            <label htmlFor="detail">Task detail: </label>
-            <input
-              ref={taskDetailRef}
-              type="text"
-              id="detail"
-              name="detail"
-              className="border-2 border-rose-600 w-64"
-            />
-          </div>
+    <form
+      onSubmit={submitTask}
+      className="flex flex-col items-center w-full space-y-3 bg-white p-5 mx-2 my-2 rounded-md drop-shadow-md h-full max-h-fit"
+    >
+      <div className="space-y-2">
+        <div>
+          <label htmlFor="name">Task name: </label>
+          <input
+            ref={taskNameRef}
+            type="text"
+            id="name"
+            name="name"
+            className="border-2 border-rose-600 w-64"
+          />
         </div>
+        <div>
+          <label htmlFor="detail">Task detail: </label>
+          <input
+            ref={taskDetailRef}
+            type="text"
+            id="detail"
+            name="detail"
+            className="border-2 border-rose-600 w-64"
+          />
+        </div>
+      </div>
 
-        <button
-          type="submit"
-          className="bg-pink-600 text-white p-2 rounded-md drop-shadow-md w-64 h-10"
-        >
-          Add New Task
-        </button>
-      </form>
-    </Card>
+      <button
+        type="submit"
+        className="bg-pink-600 text-white p-2 rounded-md drop-shadow-md w-64 h-10"
+      >
+        Add New Task
+      </button>
+    </form>
   );
 };
 
