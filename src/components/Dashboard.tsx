@@ -41,7 +41,7 @@ const Dashboard = () => {
       <div className="flex justify-center w-full max-w-7xl">
         <Form setTasks={setTasks} />
       </div>
-      <div className="flex flex-col md:flex-row w-full max-w-7xl h-full pl-2 pr-2 md:pl-0 md:pr-0">
+      <div className="flex flex-col md:flex-row w-full max-w-7xl h-full md:space-x-4">
         {sections.map((item) => {
           return (
             <Section

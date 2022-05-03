@@ -4,7 +4,7 @@ import { withTaskContext } from "./hooks/useTaskContext";
 
 function App() {
   return (
-    <div className="flex flex-col items-center bg-slate-100 min-h-screen max-h-fit">
+    <div className="flex flex-col items-center bg-slate-100 min-h-screen max-h-fit px-3">
       <Header />
       <Dashboard />
     </div>

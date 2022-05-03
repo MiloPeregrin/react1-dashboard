@@ -11,7 +11,7 @@ interface ISection {
 
 const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
   return (
-    <div className="flex flex-col w-full items-center h-full bg-white p-5 my-2 md:m-2 rounded-md drop-shadow-md max-h-fit">
+    <Card>
       <p className="font-medium text-xl">{title}</p>
       <ul className="flex flex-col w-full h-full">
         {tasks.map((item) => {
@@ -27,7 +27,7 @@ const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
           );
         })}
       </ul>
-    </div>
+    </Card>
   );
 };
 
