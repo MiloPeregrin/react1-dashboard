@@ -1,10 +1,13 @@
 import { createContext, useContext, useState } from "react";
-import { TaskItemType } from "../common/types";
+import { TaskItemType, TaskStateType } from "../common/types";
 import initialTasks from "../initialTasks.json";
 
 interface ITaskContext {
   tasks: TaskItemType[];
-  setTasks: (tasks: TaskItemType[]) => void;
+  addTask: (task: TaskItemType) => void;
+  filterTasks: (taskState: TaskStateType) => TaskItemType[];
+  forwardTask: (task: TaskItemType) => void;
+  reverseTask: (task: TaskItemType) => void;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -18,11 +21,50 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
     initialTasks as TaskItemType[]
   );
 
+  const addTask = (task: TaskItemType) => {
+    setTasks((prevState: TaskItemType[]) => {
+      return [...prevState, task];
+    });
+  };
+
+  const filterTasks = (taskState: TaskStateType) => {
+    return tasks.filter((t) => t.taskState === taskState);
+  };
+
+  const updateTaskState = (task: TaskItemType, state: TaskStateType) => {
+    const updatedTasks = tasks.map((item) => {
+      if (item === task) {
+        return { ...item, taskState: state };
+      }
+      return item;
+    });
+    setTasks(updatedTasks);
+  };
+
+  const forwardTask = (task: TaskItemType) => {
+    if (task.taskState === "Ready") {
+      updateTaskState(task, "In Progress");
+    } else {
+      updateTaskState(task, "Finished");
+    }
+  };
+
+  const reverseTask = (task: TaskItemType) => {
+    if (task.taskState === "Finished") {
+      updateTaskState(task, "In Progress");
+    } else {
+      updateTaskState(task, "Ready");
+    }
+  };
+
   return (
     <TaskContext.Provider
       value={{
         tasks,
-        setTasks,
+        addTask,
+        filterTasks,
+        forwardTask,
+        reverseTask,
       }}
     >
       {children}
@@ -32,14 +74,4 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
 
 export function useTaskContext(): ITaskContext {
   return useContext(TaskContext);
-}
-
-export function withTaskContext(Component: any) {
-  return (props: any) => {
-    return (
-      <TaskContextProvider>
-        <Component {...props} />
-      </TaskContextProvider>
-    );
-  };
 }

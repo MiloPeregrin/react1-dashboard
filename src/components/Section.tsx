@@ -14,11 +14,12 @@ const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
     <Card>
       <p className="font-medium text-xl">{title}</p>
       <ul className="flex flex-col w-full h-full">
-        {tasks.map((item) => {
+        {tasks.map((task) => {
           return (
-            <li key={`${item.taskName}${Math.random()}`}>
+            // FIXME proc nejde priradit task jako key?
+            <li key={`${task}`}>
               <TaskItem
-                task={item}
+                task={task}
                 taskState={title}
                 forwardTask={forwardTask}
                 reverseTask={reverseTask}

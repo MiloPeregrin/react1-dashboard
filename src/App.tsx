@@ -1,6 +1,5 @@
 import Dashboard from "./components/Dashboard";
 import Header from "./components/Header";
-import { withTaskContext } from "./hooks/useTaskContext";
 
 function App() {
   return (
@@ -11,4 +10,4 @@ function App() {
   );
 }
 
-export default withTaskContext(App);
+export default App;
