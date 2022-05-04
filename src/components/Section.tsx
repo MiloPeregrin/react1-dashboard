@@ -16,8 +16,7 @@ const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
       <ul className="flex flex-col w-full h-full">
         {tasks.map((task) => {
           return (
-            // FIXME proc nejde priradit task jako key?
-            <li key={`${task}`}>
+            <li key={tasks.indexOf(task)}>
               <TaskItem
                 task={task}
                 taskState={title}

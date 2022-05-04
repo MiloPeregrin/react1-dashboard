@@ -1,18 +1,17 @@
 import { useRef } from "react";
-import { TaskItemType, TaskStateType } from "../common/types";
+import { TaskStateType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Card from "./Card";
 
-interface IForm {
-  onSubmit?: (values: any) => void;
-}
+// interface IForm {
+//   onSubmit?: (values: any) => void;
+// }
 const Form = () => {
   const { addTask } = useTaskContext();
-
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     if (taskNameRef.current && taskDetailRef.current) {
       const task = {
@@ -29,7 +28,7 @@ const Form = () => {
   return (
     <Card>
       <form
-        onSubmit={onSubmit}
+        onSubmit={submitHandler}
         className="flex flex-col items-center space-y-3"
       >
         <div className="space-y-2">
