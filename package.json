@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "buildt": "npx tailwindcss build src/tailwind.css -o dist/output.css"
+    "preview": "vite preview"
   },
   "dependencies": {
     "react": "^18.0.0",

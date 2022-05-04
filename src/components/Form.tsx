@@ -3,9 +3,6 @@ import { TaskStateType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Card from "./Card";
 
-// interface IForm {
-//   onSubmit?: (values: any) => void;
-// }
 const Form = () => {
   const { addTask } = useTaskContext();
   const taskNameRef = useRef<HTMLInputElement>(null);
