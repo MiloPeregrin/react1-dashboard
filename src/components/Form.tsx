@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { TaskStateType } from "../common/types";
+import { TaskItemType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Card from "./Card";
 
@@ -11,8 +11,8 @@ const Form = () => {
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
     if (taskNameRef.current && taskDetailRef.current) {
-      const task = {
-        taskState: "Ready" as TaskStateType,
+      const task: TaskItemType = {
+        taskState: "Ready",
         taskName: taskNameRef.current.value,
         taskDetail: taskDetailRef.current.value,
       };

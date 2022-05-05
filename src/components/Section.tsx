@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { TaskItemType, TaskStateType } from "../common/types";
 import Card from "./Card";
 import TaskItem from "./TaskItem";
@@ -16,7 +17,7 @@ const Section = ({ title, tasks, forwardTask, reverseTask }: ISection) => {
       <ul className="flex flex-col w-full h-full">
         {tasks.map((task) => {
           return (
-            <li key={tasks.indexOf(task)}>
+            <li key={nanoid()}>
               <TaskItem
                 task={task}
                 taskState={title}
