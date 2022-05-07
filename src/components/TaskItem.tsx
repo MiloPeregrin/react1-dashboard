@@ -1,18 +1,23 @@
 import { TaskItemType, TaskStateType } from "../common/types";
+import { Link } from "react-router-dom";
 import Button from "./Button";
+import { useTaskContext } from "../hooks/useTaskContext";
 
 interface ITaskItem {
   task: TaskItemType;
   taskState: TaskStateType;
-  forwardTask: (task: TaskItemType) => void;
-  reverseTask: (task: TaskItemType) => void;
+  onDetail: () => void;
 }
 
-const TaskItem = ({ task, taskState, forwardTask, reverseTask }: ITaskItem) => {
+const TaskItem = ({ task, taskState, onDetail }: ITaskItem) => {
+  const { forwardTask, reverseTask } = useTaskContext();
+
   return (
     <div className="flex flex-col items-center bg-white m-2 p-2 rounded-md drop-shadow-md border-solid border border-pink-300 space-y-2">
       <p className="flex justify-center font-medium lg:text-lg">
-        {task.taskName}
+        <Link onClick={onDetail} to="/TaskDetail">
+          {task.taskName}
+        </Link>
       </p>
       <p>{task.taskDetail}</p>
       {taskState === "Ready" && (

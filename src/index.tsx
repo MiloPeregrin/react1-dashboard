@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { TaskContextProvider } from "./hooks/useTaskContext";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <TaskContextProvider>
-      <App />
-    </TaskContextProvider>
+    <BrowserRouter>
+      <TaskContextProvider>
+        <App />
+      </TaskContextProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
