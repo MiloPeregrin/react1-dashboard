@@ -19,7 +19,7 @@ function App() {
       <main className="w-full max-w-7xl">
         <Routes>
           <Route path="/" element={<Dashboard onDetail={onDetail} />} />
-          <Route path="*" element={<Dashboard onDetail={onDetail} />} />
+          <Route path="/*" element={<Dashboard onDetail={onDetail} />} />
           <Route path="/TaskDetail" element={<TaskDetail />} />
         </Routes>
       </main>

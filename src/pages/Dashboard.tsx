@@ -13,7 +13,7 @@ const Dashboard = ({ onDetail }: IDashboard) => {
   return (
     <>
       <div className="flex justify-center w-full">
-        <Form />
+        <Form mode="new" />
       </div>
       <div className="flex flex-col md:flex-row w-full max-w-7xl h-full md:space-x-4">
         {sections.map((item) => {

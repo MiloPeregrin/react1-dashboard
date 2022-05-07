@@ -1,12 +1,20 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { TaskItemType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
+import Button from "./Button";
 import Card from "./Card";
 
-const Form = () => {
+interface IForm {
+  mode: "new" | "edit";
+}
+
+const Form = ({ mode }: IForm) => {
   const { addTask } = useTaskContext();
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
+  const [disabled, setDisabled] = useState<boolean>(
+    mode === "edit" ? true : false
+  );
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +28,10 @@ const Form = () => {
       taskNameRef.current.value = "";
       taskDetailRef.current.value = "";
     }
+  };
+
+  const EditTaskDetail = () => {
+    setDisabled((prevState) => !prevState);
   };
 
   return (
@@ -37,6 +49,7 @@ const Form = () => {
               id="name"
               name="name"
               className="border-2 border-rose-600 w-64"
+              disabled={disabled}
             />
           </div>
           <div>
@@ -47,15 +60,26 @@ const Form = () => {
               id="detail"
               name="detail"
               className="border-2 border-rose-600 w-64"
+              disabled={disabled}
             />
           </div>
         </div>
-        <button
-          type="submit"
-          className="bg-pink-600 text-white p-2 rounded-md drop-shadow-md w-64 h-10"
-        >
-          Add New Task
-        </button>
+        {mode === "edit" &&
+          (disabled ? (
+            <div>
+              <Button onClick={EditTaskDetail}>Edit</Button>
+            </div>
+          ) : (
+            <div>
+              <Button onClick={EditTaskDetail}>Cancel</Button>
+              <Button onClick={EditTaskDetail}>Confirm</Button>
+            </div>
+          ))}
+        {mode === "new" && (
+          <Button type="submit" size="large">
+            Add New Task
+          </Button>
+        )}
       </form>
     </Card>
   );
