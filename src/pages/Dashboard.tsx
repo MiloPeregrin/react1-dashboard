@@ -3,10 +3,7 @@ import { useTaskContext } from "../hooks/useTaskContext";
 import Form from "../components/Form";
 import Section from "../components/Section";
 
-interface IDashboard {
-  onDetail: () => void;
-}
-const Dashboard = ({ onDetail }: IDashboard) => {
+const Dashboard = () => {
   const { filterTasks } = useTaskContext();
   const sections: TaskStateType[] = ["Ready", "In Progress", "Finished"];
 
@@ -17,14 +14,7 @@ const Dashboard = ({ onDetail }: IDashboard) => {
       </div>
       <div className="flex flex-col md:flex-row w-full max-w-7xl h-full md:space-x-4">
         {sections.map((item) => {
-          return (
-            <Section
-              key={item}
-              title={item}
-              tasks={filterTasks(item)}
-              onDetail={onDetail}
-            />
-          );
+          return <Section key={item} title={item} tasks={filterTasks(item)} />;
         })}
       </div>
     </>

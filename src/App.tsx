@@ -1,29 +1,34 @@
-import { Route, Routes } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { TaskContextProvider } from "./hooks/useTaskContext";
+import Page from "./pages/Page";
 import TaskDetail from "./pages/TaskDetail";
-import { useState } from "react";
-import Header from "./components/Header";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
-  const [showDashboard, setShowDashboard] = useState<boolean>(true);
-
-  const onBack = () => {
-    setShowDashboard(true);
-  };
-  const onDetail = () => {
-    setShowDashboard(false);
-  };
   return (
-    <div className="flex flex-col items-center bg-slate-100 min-h-screen max-h-fit px-3">
-      <Header showDashboard={showDashboard} onBack={onBack} />
-      <main className="w-full max-w-7xl">
+    <TaskContextProvider>
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Dashboard onDetail={onDetail} />} />
-          <Route path="/*" element={<Dashboard onDetail={onDetail} />} />
-          <Route path="/TaskDetail" element={<TaskDetail />} />
+          <Route
+            path="/"
+            element={
+              <Page>
+                <Dashboard />
+              </Page>
+            }
+          />
+          <Route
+            path="/TaskDetail"
+            element={
+              <Page>
+                <TaskDetail />
+              </Page>
+            }
+          />
+          <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
-      </main>
-    </div>
+      </BrowserRouter>
+    </TaskContextProvider>
   );
 }
 

@@ -3,14 +3,8 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useTaskContext } from "../hooks/useTaskContext";
 
-interface IHeader {
-  showDashboard: boolean;
-  onBack: () => void;
-}
-
-const Header = ({ showDashboard, onBack }: IHeader) => {
-  const { filterTasks } = useTaskContext();
-
+const Header = () => {
+  const { filterTasks, showDashboard, onBack } = useTaskContext();
   return (
     <header className="flex items-center justify-center text-pink-600 font-medium w-full h-8 mt-2">
       {showDashboard && (

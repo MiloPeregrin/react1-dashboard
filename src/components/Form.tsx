@@ -10,11 +10,12 @@ interface IForm {
 
 const Form = ({ mode }: IForm) => {
   const { addTask } = useTaskContext();
-  const taskNameRef = useRef<HTMLInputElement>(null);
-  const taskDetailRef = useRef<HTMLInputElement>(null);
   const [disabled, setDisabled] = useState<boolean>(
     mode === "edit" ? true : false
   );
+  const [editableValues, setEditableValues] = useState();
+  const taskNameRef = useRef<HTMLInputElement>(null);
+  const taskDetailRef = useRef<HTMLInputElement>(null);
 
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault();
