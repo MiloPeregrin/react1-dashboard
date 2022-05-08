@@ -13,7 +13,6 @@ const Form = ({ mode }: IForm) => {
   const [disabled, setDisabled] = useState<boolean>(
     mode === "edit" ? true : false
   );
-  const [editableValues, setEditableValues] = useState();
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
 
@@ -51,7 +50,7 @@ const Form = ({ mode }: IForm) => {
               name="name"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              value={mode === "edit" ? selectedTask.taskName : undefined}
+              defaultValue={mode === "edit" ? selectedTask.taskName : undefined}
             />
           </div>
           <div>
@@ -63,19 +62,25 @@ const Form = ({ mode }: IForm) => {
               name="detail"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              value={mode === "edit" ? selectedTask.taskDetail : undefined}
+              defaultValue={mode === "edit" ? selectedTask.taskDetail : ""}
             />
           </div>
         </div>
         {mode === "edit" &&
           (disabled ? (
             <div>
-              <Button onClick={EditTaskDetail}>Edit</Button>
+              <Button size="large" onClick={EditTaskDetail}>
+                Edit
+              </Button>
             </div>
           ) : (
             <div>
-              <Button onClick={EditTaskDetail}>Cancel</Button>
-              <Button onClick={EditTaskDetail}>Confirm</Button>
+              <Button size="medium" onClick={EditTaskDetail}>
+                Cancel
+              </Button>
+              <Button size="medium" onClick={EditTaskDetail}>
+                Save changes
+              </Button>
             </div>
           ))}
         {mode === "new" && (
