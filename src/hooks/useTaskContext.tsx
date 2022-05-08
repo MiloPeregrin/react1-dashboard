@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { TaskItemType, TaskStateType } from "../common/types";
+import { TaskItemDetail, TaskItemType, TaskStateType } from "../common/types";
 import initialTasks from "../initialTasks.json";
 
 interface ITaskContext {
@@ -10,7 +10,8 @@ interface ITaskContext {
   reverseTask: (task: TaskItemType) => void;
   showDashboard: boolean;
   onBack: () => void;
-  onDetail: () => void;
+  onDetail: (task: TaskItemDetail) => void;
+  selectedTask: TaskItemDetail;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -24,13 +25,18 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
     initialTasks as TaskItemType[]
   );
   const [showDashboard, setShowDashboard] = useState<boolean>(true);
+  const [selectedTask, setSelectedTask] = useState<TaskItemDetail>({
+    taskName: "name",
+    taskDetail: "detail",
+  });
 
   const onBack = () => {
     setShowDashboard(true);
   };
 
-  const onDetail = () => {
+  const onDetail = (task: TaskItemDetail) => {
     setShowDashboard(false);
+    setSelectedTask(task);
   };
 
   const addTask = (task: TaskItemType) => {
@@ -80,6 +86,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
         showDashboard,
         onBack,
         onDetail,
+        selectedTask,
       }}
     >
       {children}

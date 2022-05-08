@@ -9,7 +9,7 @@ interface IForm {
 }
 
 const Form = ({ mode }: IForm) => {
-  const { addTask } = useTaskContext();
+  const { addTask, selectedTask } = useTaskContext();
   const [disabled, setDisabled] = useState<boolean>(
     mode === "edit" ? true : false
   );
@@ -51,6 +51,7 @@ const Form = ({ mode }: IForm) => {
               name="name"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
+              value={mode === "edit" ? selectedTask.taskName : undefined}
             />
           </div>
           <div>
@@ -62,6 +63,7 @@ const Form = ({ mode }: IForm) => {
               name="detail"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
+              value={mode === "edit" ? selectedTask.taskDetail : undefined}
             />
           </div>
         </div>
