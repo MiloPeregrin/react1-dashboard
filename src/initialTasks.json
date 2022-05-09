@@ -1,27 +1,27 @@
 [
   {
-    "taskState": "Ready",
-    "taskName": "Vylezt z postele",
-    "taskDetail": "Nepřijít pozdě na standup"
+    "state": "Ready",
+    "name": "Vylezt z postele",
+    "detail": "Nepřijít pozdě na standup"
   },
   {
-    "taskState": "Ready",
-    "taskName": "Produktivní pracovní den",
-    "taskDetail": "Zlepšovat své vývojářské dovednosti"
+    "state": "Ready",
+    "name": "Produktivní pracovní den",
+    "detail": "Zlepšovat své vývojářské dovednosti"
   },
   {
-    "taskState": "In Progress",
-    "taskName": "Pracovat na ToDo app",
-    "taskDetail": ""
+    "state": "In Progress",
+    "name": "Pracovat na ToDo app",
+    "detail": ""
   },
   {
-    "taskState": "In Progress",
-    "taskName": "Java tutorial",
-    "taskDetail": "little by little one traveled far"
+    "state": "In Progress",
+    "name": "Java tutorial",
+    "detail": "little by little one traveled far"
   },
   {
-    "taskState": "Finished",
-    "taskName": "Získat práci jako programátor",
-    "taskDetail": "Dělat co tě baví"
+    "state": "Finished",
+    "name": "Získat práci jako programátor",
+    "detail": "Dělat co tě baví"
   }
 ]

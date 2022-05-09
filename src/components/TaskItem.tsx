@@ -5,11 +5,11 @@ import { useTaskContext } from "../hooks/useTaskContext";
 
 interface ITaskItem {
   task: TaskItemType;
-  taskState: TaskStateType;
+  state: TaskStateType;
   onDetail: (task: TaskItemType) => void;
 }
 
-const TaskItem = ({ task, taskState, onDetail }: ITaskItem) => {
+const TaskItem = ({ task, state, onDetail }: ITaskItem) => {
   const { forwardTask, reverseTask } = useTaskContext();
 
   return (
@@ -20,20 +20,20 @@ const TaskItem = ({ task, taskState, onDetail }: ITaskItem) => {
           onClick={() => onDetail(task)}
           to="/TaskDetail"
         >
-          {task.taskName}
+          {task.name}
         </Link>
       </p>
-      <p>{task.taskDetail}</p>
-      {taskState === "Ready" && (
+      <p>{task.detail}</p>
+      {state === "Ready" && (
         <Button onClick={() => forwardTask(task)}>{`>`}</Button>
       )}
-      {taskState === "In Progress" && (
+      {state === "In Progress" && (
         <div>
           <Button onClick={() => reverseTask(task)}>{`<`}</Button>
           <Button onClick={() => forwardTask(task)}>{`>`}</Button>
         </div>
       )}
-      {taskState === "Finished" && (
+      {state === "Finished" && (
         <Button onClick={() => reverseTask(task)}>{`<`}</Button>
       )}
     </div>

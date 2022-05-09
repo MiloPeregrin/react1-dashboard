@@ -5,7 +5,7 @@ import initialTasks from "../initialTasks.json";
 interface ITaskContext {
   tasks: TaskItemType[];
   addTask: (task: TaskItemType) => void;
-  filterTasks: (taskState: TaskStateType) => TaskItemType[];
+  filterTasks: (state: TaskStateType) => TaskItemType[];
   forwardTask: (task: TaskItemType) => void;
   reverseTask: (task: TaskItemType) => void;
   // showDashboard: boolean;
@@ -33,14 +33,14 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
 
   const updateTask = () => {};
 
-  const filterTasks = (taskState: TaskStateType) => {
-    return tasks.filter((t) => t.taskState === taskState);
+  const filterTasks = (state: TaskStateType) => {
+    return tasks.filter((t) => t.state === state);
   };
 
   const updateTaskState = (task: TaskItemType, state: TaskStateType) => {
     const updatedTasks = tasks.map((item) => {
       if (item === task) {
-        return { ...item, taskState: state };
+        return { ...item, state: state };
       }
       return item;
     });
@@ -48,7 +48,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   };
 
   const forwardTask = (task: TaskItemType) => {
-    if (task.taskState === "Ready") {
+    if (task.state === "Ready") {
       updateTaskState(task, "In Progress");
     } else {
       updateTaskState(task, "Finished");
@@ -56,7 +56,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   };
 
   const reverseTask = (task: TaskItemType) => {
-    if (task.taskState === "Finished") {
+    if (task.state === "Finished") {
       updateTaskState(task, "In Progress");
     } else {
       updateTaskState(task, "Ready");

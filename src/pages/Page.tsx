@@ -8,9 +8,9 @@ import TaskDetail from "./TaskDetail";
 const Page = () => {
   const [showDashboard, setShowDashboard] = useState<boolean>(true);
   const [selectedTask, setSelectedTask] = useState<TaskItemType>({
-    taskState: "Ready",
-    taskName: "name",
-    taskDetail: "detail",
+    state: "Ready",
+    name: "name",
+    detail: "detail",
   });
   const navigate = useNavigate();
 

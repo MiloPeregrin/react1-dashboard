@@ -17,7 +17,7 @@ const Section = ({ title, tasks, onDetail }: ISection) => {
         {tasks.map((task) => {
           return (
             <li key={generateUUID()}>
-              <TaskItem task={task} taskState={title} onDetail={onDetail} />
+              <TaskItem task={task} state={title} onDetail={onDetail} />
             </li>
           );
         })}
