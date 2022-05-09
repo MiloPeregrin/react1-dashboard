@@ -5,13 +5,13 @@ import Header from "../components/Header";
 import Dashboard from "./Dashboard";
 import TaskDetail from "./TaskDetail";
 
-// interface IPage {
-//   children: React.ReactNode;
-// }
-
 const Page = () => {
   const [showDashboard, setShowDashboard] = useState<boolean>(true);
-  const [selectedTask, setSelectedTask] = useState<TaskItemType>();
+  const [selectedTask, setSelectedTask] = useState<TaskItemType>({
+    taskState: "Ready",
+    taskName: "name",
+    taskDetail: "detail",
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,9 +32,9 @@ const Page = () => {
       <Header onBack={onBack} showDashboard={showDashboard} />
       <main className="w-full max-w-7xl">
         {showDashboard ? (
-          <Dashboard onDetail={onDetail} selectedTask={selectedTask!} />
+          <Dashboard onDetail={onDetail} selectedTask={selectedTask} />
         ) : (
-          <TaskDetail selectedTask={selectedTask!} />
+          <TaskDetail selectedTask={selectedTask} />
         )}
       </main>
     </div>

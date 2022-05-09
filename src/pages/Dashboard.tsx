@@ -2,7 +2,6 @@ import { TaskItemType, TaskStateType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Form from "../components/Form";
 import Section from "../components/Section";
-import { useState } from "react";
 
 interface IDashboard {
   // setShowDashboard: (value: boolean) => void;

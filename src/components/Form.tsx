@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { TaskItemType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Button from "./Button";
@@ -13,22 +13,28 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const editMode = mode === "edit";
   const { tasks, addTask } = useTaskContext();
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
-  const taskNameRef = useRef<HTMLInputElement>(null);
-  const taskDetailRef = useRef<HTMLInputElement>(null);
+  // const [inputState, setInputState] = useState<TaskItemType>(selectedTask);
+
+  const [name, setName] = useState<string>(selectedTask.taskName);
+  const [detail, setDetail] = useState<string>(selectedTask.taskDetail);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (taskNameRef.current && taskDetailRef.current) {
-      const task: TaskItemType = {
-        taskState: `${editMode ? selectedTask.taskState : "Ready"}`,
-        taskName: taskNameRef.current.value,
-        taskDetail: taskDetailRef.current.value,
-      };
-      addTask(task);
-      taskNameRef.current.value = "";
-      taskDetailRef.current.value = "";
-    }
+
+    const updatedTask: TaskItemType = {
+      taskState: `${editMode ? selectedTask.taskState : "Ready"}`,
+      taskName: name,
+      taskDetail: detail,
+    };
+    addTask(updatedTask);
+
+    // setInputState({
+    //   taskState: "Finished",
+    //   taskName: "",
+    //   taskDetail: "",
+    // });
   };
+
   const handleEdit = () => {
     setDisabled((prevState) => !prevState);
   };
@@ -36,6 +42,22 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const handleCancel = () => {};
 
   const handleSave = () => {};
+
+  // const handleNameChange = (e: any) => {
+  //   console.log("etarget", e.target.value);
+  //   setInputState((prevState) => ({
+  //     ...prevState,
+  //     taskName: e.target.value,
+  //   }));
+  // };
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+    console.log("setName", e.target.value);
+  };
+  const handleDetailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDetail(e.target.value);
+    console.log("setDetail", e.target.value);
+  };
 
   return (
     <Card>
@@ -47,25 +69,27 @@ const Form = ({ mode, selectedTask }: IForm) => {
           <div>
             <label htmlFor="name">Task name: </label>
             <input
-              ref={taskNameRef}
               type="text"
               id="name"
               name="name"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              defaultValue={editMode ? selectedTask.taskName : ""}
+              // defaultValue={editMode ? selectedTask.taskName : ""}
+              value={editMode ? name : ""}
+              onChange={handleNameChange}
             />
           </div>
           <div>
             <label htmlFor="detail">Task detail: </label>
             <input
-              ref={taskDetailRef}
               type="text"
               id="detail"
               name="detail"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              defaultValue={editMode ? selectedTask.taskDetail : ""}
+              // defaultValue={editMode ? selectedTask.taskDetail : ""}
+              value={editMode ? detail : ""}
+              onChange={handleDetailChange}
             />
           </div>
         </div>
@@ -81,7 +105,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
               <Button size="medium" onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button size="medium" onClick={handleSave}>
+              <Button type="submit" size="medium" onClick={handleSave}>
                 Save changes
               </Button>
             </div>

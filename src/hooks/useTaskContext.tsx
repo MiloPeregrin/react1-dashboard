@@ -31,6 +31,8 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
     });
   };
 
+  const updateTask = () => {};
+
   const filterTasks = (taskState: TaskStateType) => {
     return tasks.filter((t) => t.taskState === taskState);
   };
