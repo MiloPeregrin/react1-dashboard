@@ -11,7 +11,7 @@ interface IForm {
 
 const Form = ({ mode, selectedTask }: IForm) => {
   const editMode = mode === "edit";
-  const { tasks, addTask } = useTaskContext();
+  const { addTask, updateTask } = useTaskContext();
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
   const [inputState, setInputState] = useState<TaskItemType>(
     editMode ? selectedTask : { state: "Ready", name: "", detail: "" }
@@ -20,12 +20,11 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const handleDisabled = () => {
     setDisabled(false);
   };
-  console.log("disabled", disabled);
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editMode) {
-      // FIXME pouzit editTask fci
-      addTask(inputState);
+      updateTask(selectedTask, inputState);
       setDisabled(true);
     } else {
       addTask(inputState);
