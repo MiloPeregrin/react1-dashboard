@@ -15,18 +15,27 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
   // const [inputState, setInputState] = useState<TaskItemType>(selectedTask);
 
-  const [name, setName] = useState<string>(selectedTask.taskName);
-  const [detail, setDetail] = useState<string>(selectedTask.taskDetail);
+  const [name, setName] = useState<string>(
+    editMode ? selectedTask.taskName : ""
+  );
+  const [detail, setDetail] = useState<string>(
+    editMode ? selectedTask.taskDetail : ""
+  );
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const updatedTask: TaskItemType = {
       taskState: `${editMode ? selectedTask.taskState : "Ready"}`,
       taskName: name,
       taskDetail: detail,
     };
     addTask(updatedTask);
+    if (editMode) {
+      setDisabled((prevState) => !prevState);
+    } else {
+      setName("");
+      setDetail("");
+    }
 
     // setInputState({
     //   taskState: "Finished",
@@ -39,11 +48,13 @@ const Form = ({ mode, selectedTask }: IForm) => {
     setDisabled((prevState) => !prevState);
   };
 
-  const handleCancel = () => {};
+  const handleCancel = () => {
+    setName(selectedTask.taskName);
+    setDetail(selectedTask.taskDetail);
+    setDisabled((prevState) => !prevState);
+  };
 
-  const handleSave = () => {};
-
-  // const handleNameChange = (e: any) => {
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   console.log("etarget", e.target.value);
   //   setInputState((prevState) => ({
   //     ...prevState,
@@ -52,11 +63,9 @@ const Form = ({ mode, selectedTask }: IForm) => {
   // };
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
-    console.log("setName", e.target.value);
   };
   const handleDetailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDetail(e.target.value);
-    console.log("setDetail", e.target.value);
   };
 
   return (
@@ -75,7 +84,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
               // defaultValue={editMode ? selectedTask.taskName : ""}
-              value={editMode ? name : ""}
+              value={name}
               onChange={handleNameChange}
             />
           </div>
@@ -88,7 +97,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
               // defaultValue={editMode ? selectedTask.taskDetail : ""}
-              value={editMode ? detail : ""}
+              value={detail}
               onChange={handleDetailChange}
             />
           </div>
@@ -105,7 +114,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
               <Button size="medium" onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button type="submit" size="medium" onClick={handleSave}>
+              <Button type="submit" size="medium">
                 Save changes
               </Button>
             </div>
