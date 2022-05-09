@@ -13,57 +13,41 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const editMode = mode === "edit";
   const { tasks, addTask } = useTaskContext();
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
-  const [inputState, setInputState] = useState<TaskItemType>(selectedTask);
-
-  const [name, setName] = useState<string>(editMode ? selectedTask.name : "");
-  const [detail, setDetail] = useState<string>(
-    editMode ? selectedTask.detail : ""
+  const [inputState, setInputState] = useState<TaskItemType>(
+    editMode ? selectedTask : { state: "Ready", name: "", detail: "" }
   );
 
+  const handleDisabled = () => {
+    setDisabled(false);
+  };
+  console.log("disabled", disabled);
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const updatedTask: TaskItemType = {
-      state: `${editMode ? selectedTask.state : "Ready"}`,
-      name: name,
-      detail: detail,
-    };
-    addTask(updatedTask);
     if (editMode) {
-      setDisabled((prevState) => !prevState);
+      // FIXME pouzit editTask fci
+      addTask(inputState);
+      setDisabled(true);
     } else {
-      setName("");
-      setDetail("");
+      addTask(inputState);
+      setInputState((prevState) => ({
+        ...prevState,
+        name: "",
+        detail: "",
+      }));
     }
-
-    // setInputState({
-    //   state: "Finished",
-    //   name: "",
-    //   detail: "",
-    // });
-  };
-
-  const handleEdit = () => {
-    setDisabled((prevState) => !prevState);
   };
 
   const handleCancel = () => {
-    setName(selectedTask.name);
-    setDetail(selectedTask.detail);
-    setDisabled((prevState) => !prevState);
+    setInputState(selectedTask);
+    setDisabled(true);
   };
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   console.log("etarget", e.target.value);
-  //   setInputState((prevState) => ({
-  //     ...prevState,
-  //     name: e.target.value,
-  //   }));
-  // };
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const handleDetailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDetail(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
@@ -81,9 +65,8 @@ const Form = ({ mode, selectedTask }: IForm) => {
               name="name"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              // defaultValue={editMode ? selectedTask.name : ""}
-              value={name}
-              onChange={handleNameChange}
+              value={inputState.name}
+              onChange={handleChange}
             />
           </div>
           <div>
@@ -94,16 +77,15 @@ const Form = ({ mode, selectedTask }: IForm) => {
               name="detail"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              // defaultValue={editMode ? selectedTask.detail : ""}
-              value={detail}
-              onChange={handleDetailChange}
+              value={inputState.detail}
+              onChange={handleChange}
             />
           </div>
         </div>
         {editMode &&
           (disabled ? (
             <div>
-              <Button size="large" onClick={handleEdit}>
+              <Button size="large" onClick={handleDisabled}>
                 Edit
               </Button>
             </div>
