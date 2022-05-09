@@ -5,5 +5,3 @@ export type TaskItemType = {
   taskName: string;
   taskDetail: string;
 };
-
-export type TaskItemDetail = Omit<TaskItemType, "taskState">;

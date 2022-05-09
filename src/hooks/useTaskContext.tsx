@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { TaskItemDetail, TaskItemType, TaskStateType } from "../common/types";
+import { TaskItemType, TaskStateType } from "../common/types";
 import initialTasks from "../initialTasks.json";
 
 interface ITaskContext {
@@ -10,8 +10,8 @@ interface ITaskContext {
   reverseTask: (task: TaskItemType) => void;
   showDashboard: boolean;
   onBack: () => void;
-  onDetail: (task: TaskItemDetail) => void;
-  selectedTask: TaskItemDetail;
+  onDetail: (task: TaskItemType) => void;
+  selectedTask: TaskItemType;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -25,19 +25,22 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
     initialTasks as TaskItemType[]
   );
   const [showDashboard, setShowDashboard] = useState<boolean>(true);
-  const [selectedTask, setSelectedTask] = useState<TaskItemDetail>({
-    taskName: "name",
-    taskDetail: "detail",
-  });
+  const [selectedTask, setSelectedTask] = useState<TaskItemType>(
+    {} as TaskItemType
+  );
 
   const onBack = () => {
     setShowDashboard(true);
   };
 
-  const onDetail = (task: TaskItemDetail) => {
+  const onDetail = (task: TaskItemType) => {
     setShowDashboard(false);
     setSelectedTask(task);
   };
+
+  const onEditTaskCancel = () => {};
+
+  const onEditTask = () => {};
 
   const addTask = (task: TaskItemType) => {
     setTasks((prevState: TaskItemType[]) => {

@@ -9,35 +9,34 @@ interface IForm {
 }
 
 const Form = ({ mode }: IForm) => {
-  const { addTask, selectedTask } = useTaskContext();
-  const [disabled, setDisabled] = useState<boolean>(
-    mode === "edit" ? true : false
-  );
+  const editMode = mode === "edit";
+  const { tasks, addTask, selectedTask } = useTaskContext();
+  const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
 
-  const submitHandler = (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (taskNameRef.current && taskDetailRef.current) {
       const task: TaskItemType = {
-        taskState: "Ready",
+        taskState: `${editMode ? selectedTask.taskState : "Ready"}`,
         taskName: taskNameRef.current.value,
         taskDetail: taskDetailRef.current.value,
       };
       addTask(task);
       taskNameRef.current.value = "";
       taskDetailRef.current.value = "";
+      console.log("tasks", tasks);
     }
   };
-
-  const EditTaskDetail = () => {
+  const handleDisabled = () => {
     setDisabled((prevState) => !prevState);
   };
 
   return (
     <Card>
       <form
-        onSubmit={submitHandler}
+        onSubmit={onSubmit}
         className="flex flex-col items-center space-y-3"
       >
         <div className="space-y-2">
@@ -50,7 +49,7 @@ const Form = ({ mode }: IForm) => {
               name="name"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              defaultValue={mode === "edit" ? selectedTask.taskName : undefined}
+              defaultValue={editMode ? selectedTask.taskName : ""}
             />
           </div>
           <div>
@@ -62,28 +61,28 @@ const Form = ({ mode }: IForm) => {
               name="detail"
               className="border-2 border-rose-600 w-64"
               disabled={disabled}
-              defaultValue={mode === "edit" ? selectedTask.taskDetail : ""}
+              defaultValue={editMode ? selectedTask.taskDetail : ""}
             />
           </div>
         </div>
-        {mode === "edit" &&
+        {editMode &&
           (disabled ? (
             <div>
-              <Button size="large" onClick={EditTaskDetail}>
+              <Button size="large" onClick={handleDisabled}>
                 Edit
               </Button>
             </div>
           ) : (
             <div>
-              <Button size="medium" onClick={EditTaskDetail}>
+              <Button size="medium" onClick={handleDisabled}>
                 Cancel
               </Button>
-              <Button size="medium" onClick={EditTaskDetail}>
+              <Button size="medium" onClick={handleDisabled}>
                 Save changes
               </Button>
             </div>
           ))}
-        {mode === "new" && (
+        {!editMode && (
           <Button type="submit" size="large">
             Add New Task
           </Button>
