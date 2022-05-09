@@ -1,7 +1,12 @@
+import { TaskItemType } from "../common/types";
 import Form from "../components/Form";
 
-const TaskDetail = () => {
-  return <Form mode="edit" />;
+interface ITaskDetail {
+  selectedTask: TaskItemType;
+}
+
+const TaskDetail = ({ selectedTask }: ITaskDetail) => {
+  return <Form mode="edit" selectedTask={selectedTask} />;
 };
 
 export default TaskDetail;

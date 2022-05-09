@@ -6,11 +6,12 @@ import Card from "./Card";
 
 interface IForm {
   mode: "new" | "edit";
+  selectedTask: TaskItemType;
 }
 
-const Form = ({ mode }: IForm) => {
+const Form = ({ mode, selectedTask }: IForm) => {
   const editMode = mode === "edit";
-  const { tasks, addTask, selectedTask } = useTaskContext();
+  const { tasks, addTask } = useTaskContext();
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
   const taskNameRef = useRef<HTMLInputElement>(null);
   const taskDetailRef = useRef<HTMLInputElement>(null);
@@ -26,12 +27,15 @@ const Form = ({ mode }: IForm) => {
       addTask(task);
       taskNameRef.current.value = "";
       taskDetailRef.current.value = "";
-      console.log("tasks", tasks);
     }
   };
-  const handleDisabled = () => {
+  const handleEdit = () => {
     setDisabled((prevState) => !prevState);
   };
+
+  const handleCancel = () => {};
+
+  const handleSave = () => {};
 
   return (
     <Card>
@@ -68,16 +72,16 @@ const Form = ({ mode }: IForm) => {
         {editMode &&
           (disabled ? (
             <div>
-              <Button size="large" onClick={handleDisabled}>
+              <Button size="large" onClick={handleEdit}>
                 Edit
               </Button>
             </div>
           ) : (
             <div>
-              <Button size="medium" onClick={handleDisabled}>
+              <Button size="medium" onClick={handleCancel}>
                 Cancel
               </Button>
-              <Button size="medium" onClick={handleDisabled}>
+              <Button size="medium" onClick={handleSave}>
                 Save changes
               </Button>
             </div>

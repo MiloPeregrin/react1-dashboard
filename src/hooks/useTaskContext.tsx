@@ -8,10 +8,10 @@ interface ITaskContext {
   filterTasks: (taskState: TaskStateType) => TaskItemType[];
   forwardTask: (task: TaskItemType) => void;
   reverseTask: (task: TaskItemType) => void;
-  showDashboard: boolean;
-  onBack: () => void;
-  onDetail: (task: TaskItemType) => void;
-  selectedTask: TaskItemType;
+  // showDashboard: boolean;
+  // onBack: () => void;
+  // onDetail: (task: TaskItemType) => void;
+  // selectedTask: TaskItemType;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -24,23 +24,6 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   const [tasks, setTasks] = useState<TaskItemType[]>(
     initialTasks as TaskItemType[]
   );
-  const [showDashboard, setShowDashboard] = useState<boolean>(true);
-  const [selectedTask, setSelectedTask] = useState<TaskItemType>(
-    {} as TaskItemType
-  );
-
-  const onBack = () => {
-    setShowDashboard(true);
-  };
-
-  const onDetail = (task: TaskItemType) => {
-    setShowDashboard(false);
-    setSelectedTask(task);
-  };
-
-  const onEditTaskCancel = () => {};
-
-  const onEditTask = () => {};
 
   const addTask = (task: TaskItemType) => {
     setTasks((prevState: TaskItemType[]) => {
@@ -86,10 +69,10 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
         filterTasks,
         forwardTask,
         reverseTask,
-        showDashboard,
-        onBack,
-        onDetail,
-        selectedTask,
+        // showDashboard,
+        // onBack,
+        // onDetail,
+        // selectedTask,
       }}
     >
       {children}

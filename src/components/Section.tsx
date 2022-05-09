@@ -6,9 +6,10 @@ import TaskItem from "./TaskItem";
 interface ISection {
   title: TaskStateType;
   tasks: TaskItemType[];
+  onDetail: (task: TaskItemType) => void;
 }
 
-const Section = ({ title, tasks }: ISection) => {
+const Section = ({ title, tasks, onDetail }: ISection) => {
   return (
     <Card>
       <p className="font-medium text-xl">{title}</p>
@@ -16,7 +17,7 @@ const Section = ({ title, tasks }: ISection) => {
         {tasks.map((task) => {
           return (
             <li key={generateUUID()}>
-              <TaskItem task={task} taskState={title} />
+              <TaskItem task={task} taskState={title} onDetail={onDetail} />
             </li>
           );
         })}

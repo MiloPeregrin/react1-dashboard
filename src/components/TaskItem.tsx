@@ -6,10 +6,11 @@ import { useTaskContext } from "../hooks/useTaskContext";
 interface ITaskItem {
   task: TaskItemType;
   taskState: TaskStateType;
+  onDetail: (task: TaskItemType) => void;
 }
 
-const TaskItem = ({ task, taskState }: ITaskItem) => {
-  const { forwardTask, reverseTask, onDetail } = useTaskContext();
+const TaskItem = ({ task, taskState, onDetail }: ITaskItem) => {
+  const { forwardTask, reverseTask } = useTaskContext();
 
   return (
     <div className="flex flex-col items-center bg-white m-2 p-2 rounded-md drop-shadow-md border-solid border border-pink-300 space-y-2">
