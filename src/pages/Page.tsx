@@ -4,6 +4,7 @@ import { TaskItemType } from "../common/types";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import Dashboard from "./Dashboard";
+import EditTaskForm from "./EditTaskForm";
 import NewTaskForm from "./NewTaskForm";
 
 // interface IPage {
@@ -47,7 +48,7 @@ const Page = () => {
       <main className="w-full max-w-7xl">
         {route === "dashboard" && <Dashboard onDetail={onDetail} />}
         {route === "new" && <NewTaskForm selectedTask={selectedTask} />}
-        {route === "edit" && <NewTaskForm selectedTask={selectedTask} />}
+        {route === "edit" && <EditTaskForm selectedTask={selectedTask} />}
       </main>
     </div>
   );
