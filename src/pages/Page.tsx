@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RouteType, TaskItemType } from "../common/types";
-import Button from "../components/Button";
 import Form from "./Form";
 import Header from "../components/Header";
 import Dashboard from "./Dashboard";
@@ -35,13 +34,10 @@ const Page = () => {
   return (
     <div className="flex flex-col items-center bg-slate-100 min-h-screen max-h-fit px-3">
       <Header onBack={onBack} route={route} />
-      {route === "dashboard" && (
-        <Link className="m-1" to="/new" onClick={onNew}>
-          <Button size="medium">New</Button>
-        </Link>
-      )}
       <main className="w-full max-w-7xl">
-        {route === "dashboard" && <Dashboard onDetail={onDetail} />}
+        {route === "dashboard" && (
+          <Dashboard onDetail={onDetail} onNew={onNew} />
+        )}
         {route === "new" && <Form mode="new" selectedTask={selectedTask} />}
         {route === "edit" && <Form mode="edit" selectedTask={selectedTask} />}
       </main>
