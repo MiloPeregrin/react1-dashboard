@@ -18,7 +18,7 @@ const TaskItem = ({ task, state, onDetail }: ITaskItem) => {
         <Link
           className="hover:text-pink-500 hover:underline focus:text-pink-500 focus:underline"
           onClick={() => onDetail(task)}
-          to="/TaskDetail"
+          to="/edit"
         >
           {task.name}
         </Link>

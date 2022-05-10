@@ -8,7 +8,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Page />} />
-          <Route path="/TaskDetail" element={<Page />} />
+          <Route path="/new" element={<Page />} />
+          <Route path="/edit" element={<Page />} />
           <Route path="/*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>

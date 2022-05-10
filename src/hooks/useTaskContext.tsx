@@ -9,6 +9,8 @@ interface ITaskContext {
   forwardTask: (task: TaskItemType) => void;
   reverseTask: (task: TaskItemType) => void;
   updateTask: (task: TaskItemType, state: TaskItemType) => void;
+  // selectedTask: TaskItemType;
+  // onDetail: (task: TaskItemType) => void;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -21,6 +23,16 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   const [tasks, setTasks] = useState<TaskItemType[]>(
     initialTasks as TaskItemType[]
   );
+  // const [selectedTask, setSelectedTask] = useState<TaskItemType>({
+  //   state: "Ready",
+  //   name: "name",
+  //   detail: "detail",
+  // });
+
+  // const onDetail = (task: TaskItemType) => {
+  //   setShowDashboard(false);
+  //   setSelectedTask(task);
+  // };
 
   const filterTasks = (state: TaskStateType) => {
     return tasks.filter((t) => t.state === state);
@@ -74,6 +86,8 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
         forwardTask,
         reverseTask,
         updateTask,
+        // selectedTask,
+        // onDetail,
       }}
     >
       {children}
