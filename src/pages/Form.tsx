@@ -25,7 +25,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
 
   const handleShowAlert = () => {
     setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 5000);
+    setTimeout(() => setShowAlert(false), 3000);
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -114,9 +114,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
           )}
         </form>
       </Card>
-      <div className="flex justify-center w-full">
-        {showAlert && <Alert action={mode} />}
-      </div>
+      {showAlert && <Alert action={mode} />}
     </div>
   );
 };
