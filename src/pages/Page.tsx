@@ -6,10 +6,6 @@ import Form from "./Form";
 import Header from "../components/Header";
 import Dashboard from "./Dashboard";
 
-// interface IPage {
-//   children: React.ReactNode;
-// }
-
 const Page = () => {
   const [route, setRoute] = useState<RouteType>("dashboard");
   const [selectedTask, setSelectedTask] = useState<TaskItemType>({
