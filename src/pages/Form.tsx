@@ -4,6 +4,7 @@ import { useTaskContext } from "../hooks/useTaskContext";
 import Alert from "../components/Alert";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import { generateUUID } from "../common/utility";
 
 interface IForm {
   mode: "new" | "edit";
@@ -15,7 +16,9 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const { addTask, updateTask } = useTaskContext();
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
   const [inputState, setInputState] = useState<TaskItemType>(
-    editMode ? selectedTask : { state: "Ready", name: "", detail: "" }
+    editMode
+      ? selectedTask
+      : { id: generateUUID(), state: "Ready", name: "", detail: "" }
   );
   const [showAlert, setShowAlert] = useState<boolean>(false);
 
@@ -37,6 +40,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
       addTask(inputState);
       setInputState((prevState) => ({
         ...prevState,
+        id: "",
         name: "",
         detail: "",
       }));

@@ -15,7 +15,7 @@ const Dashboard = ({ onDetail, onNew }: IDashboard) => {
 
   return (
     <div className="flex flex-col items-center">
-      <Link className="m-1" to="/new" onClick={onNew}>
+      <Link className="m-1" to="/new_task" onClick={onNew}>
         <Button size="medium">New</Button>
       </Link>
       <div className="flex flex-col md:flex-row w-full max-w-7xl h-full md:space-x-4">

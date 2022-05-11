@@ -4,21 +4,21 @@ import Button from "./Button";
 import { useTaskContext } from "../hooks/useTaskContext";
 
 interface ITaskItem {
+  id: string;
   task: TaskItemType;
   state: TaskStateType;
   onDetail: (task: TaskItemType) => void;
 }
 
-const TaskItem = ({ task, state, onDetail }: ITaskItem) => {
+const TaskItem = ({ task, state, onDetail, id }: ITaskItem) => {
   const { forwardTask, reverseTask } = useTaskContext();
-
   return (
     <div className="flex flex-col items-center bg-white m-2 p-2 rounded-md drop-shadow-md border-solid border border-pink-300 space-y-2">
       <p className="flex justify-center font-medium lg:text-lg">
         <Link
           className="hover:text-pink-500 hover:underline focus:text-pink-500 focus:underline"
           onClick={() => onDetail(task)}
-          to="/edit"
+          to={`/detail/${id}`}
         >
           {task.name}
         </Link>
