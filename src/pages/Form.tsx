@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TaskItemType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Alert from "../components/Alert";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import { generateUUID } from "../common/utility";
+import { useParams } from "react-router-dom";
 
 interface IForm {
   mode: "new" | "edit";
@@ -13,7 +14,8 @@ interface IForm {
 
 const Form = ({ mode, selectedTask }: IForm) => {
   const editMode = mode === "edit";
-  const { addTask, updateTask } = useTaskContext();
+  const params = useParams();
+  const { addTask, updateTask, tasks } = useTaskContext();
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
   const [inputState, setInputState] = useState<TaskItemType>(
     editMode
@@ -21,6 +23,14 @@ const Form = ({ mode, selectedTask }: IForm) => {
       : { id: generateUUID(), state: "Ready", name: "", detail: "" }
   );
   const [showAlert, setShowAlert] = useState<boolean>(false);
+
+  useEffect(() => {
+    const initialTask = tasks.find((item) => item.id === params.id);
+
+    if (initialTask) {
+      setInputState(initialTask);
+    }
+  }, [params, tasks]);
 
   const handleDisabled = () => {
     setDisabled(false);
@@ -38,12 +48,6 @@ const Form = ({ mode, selectedTask }: IForm) => {
       setDisabled(true);
     } else {
       addTask(inputState);
-      setInputState((prevState) => ({
-        ...prevState,
-        id: "",
-        name: "",
-        detail: "",
-      }));
     }
     handleShowAlert();
   };

@@ -7,7 +7,6 @@ import Page from "./pages/Page";
 import { generateUUID } from "./common/utility";
 
 function App() {
-  const [showDashboard, setShowDashboard] = useState<boolean>(true);
   const [selectedTask, setSelectedTask] = useState<TaskItemType>({
     id: generateUUID(),
     state: "Ready",
@@ -15,32 +14,24 @@ function App() {
     detail: "",
   });
 
-  const onBack = () => {
-    setShowDashboard(true);
-  };
-
-  const onNew = () => {
-    setShowDashboard(false);
-  };
-
   const onDetail = (task: TaskItemType) => {
-    setShowDashboard(false);
     setSelectedTask(task);
   };
+
   return (
     <Routes>
       <Route
         path="/"
         element={
-          <Page onBack={onBack} showDashboard={showDashboard}>
-            <Dashboard onDetail={onDetail} onNew={onNew} />
+          <Page showDashboard={true}>
+            <Dashboard onDetail={onDetail} />
           </Page>
         }
       />
       <Route
         path="/new_task"
         element={
-          <Page onBack={onBack} showDashboard={showDashboard}>
+          <Page showDashboard={false}>
             <Form mode="new" selectedTask={selectedTask} />
           </Page>
         }
@@ -48,7 +39,7 @@ function App() {
       <Route
         path="/detail/:id"
         element={
-          <Page onBack={onBack} showDashboard={showDashboard}>
+          <Page showDashboard={false}>
             <Form mode="edit" selectedTask={selectedTask} />
           </Page>
         }

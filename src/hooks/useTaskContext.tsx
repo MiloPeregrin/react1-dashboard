@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import { TaskItemType, TaskStateType } from "../common/types";
-import { generateUUID } from "../common/utility";
 import initialTasks from "../initialTasks.json";
 interface ITaskContext {
   tasks: TaskItemType[];
@@ -16,12 +15,14 @@ interface ITaskContextProvider {
   children: React.ReactNode;
 }
 
-const initial = initialTasks.map((item) => {
-  return { ...item, id: generateUUID() };
-});
+// const initial = initialTasks.map((item) => {
+//   return { ...item, id: generateUUID() };
+// });
 
 export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
-  const [tasks, setTasks] = useState<TaskItemType[]>(initial as TaskItemType[]);
+  const [tasks, setTasks] = useState<TaskItemType[]>(
+    initialTasks as TaskItemType[]
+  );
 
   const filterTasks = (state: TaskStateType) => {
     return tasks.filter((t) => t.state === state);

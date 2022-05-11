@@ -6,16 +6,15 @@ import Button from "../components/Button";
 
 interface IDashboard {
   onDetail: (task: TaskItemType) => void;
-  onNew: () => void;
 }
 
-const Dashboard = ({ onDetail, onNew }: IDashboard) => {
+const Dashboard = ({ onDetail }: IDashboard) => {
   const { filterTasks } = useTaskContext();
   const sections: TaskStateType[] = ["Ready", "In Progress", "Finished"];
 
   return (
     <div className="flex flex-col items-center">
-      <Link className="m-1" to="/new_task" onClick={onNew}>
+      <Link className="m-1" to="/new_task">
         <Button size="medium">New</Button>
       </Link>
       <div className="flex flex-col md:flex-row w-full max-w-7xl h-full md:space-x-4">

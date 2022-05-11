@@ -1,25 +1,30 @@
 [
   {
+    "id": "1",
     "state": "Ready",
     "name": "Vylezt z postele",
     "detail": "Nepřijít pozdě na standup"
   },
   {
+    "id": "2",
     "state": "Ready",
     "name": "Produktivní pracovní den",
     "detail": "Zlepšovat své vývojářské dovednosti"
   },
   {
+    "id": "3",
     "state": "In Progress",
     "name": "Pracovat na ToDo app",
     "detail": ""
   },
   {
+    "id": "4",
     "state": "In Progress",
     "name": "Java tutorial",
     "detail": "little by little one traveled far"
   },
   {
+    "id": "5",
     "state": "Finished",
     "name": "Získat práci jako programátor",
     "detail": "Dělat co tě baví"
