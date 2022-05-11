@@ -15,10 +15,6 @@ interface ITaskContextProvider {
   children: React.ReactNode;
 }
 
-// const initial = initialTasks.map((item) => {
-//   return { ...item, id: generateUUID() };
-// });
-
 export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   const [tasks, setTasks] = useState<TaskItemType[]>(
     initialTasks as TaskItemType[]
