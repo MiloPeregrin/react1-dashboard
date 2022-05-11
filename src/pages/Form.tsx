@@ -30,7 +30,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
     if (initialTask) {
       setInputState(initialTask);
     }
-  }, [params, tasks]);
+  }, []);
 
   const handleDisabled = () => {
     setDisabled(false);
