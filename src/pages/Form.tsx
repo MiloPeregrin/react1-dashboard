@@ -4,7 +4,6 @@ import { useTaskContext } from "../hooks/useTaskContext";
 import Alert from "../components/Alert";
 import Button from "../components/Button";
 import Card from "../components/Card";
-import { generateUUID } from "../common/utility";
 import { useParams } from "react-router-dom";
 
 interface IForm {
@@ -13,25 +12,35 @@ interface IForm {
 }
 
 const Form = ({ mode, selectedTask }: IForm) => {
-  const editMode = mode === "edit";
+  const { addTask, updateTasks, tasks } = useTaskContext();
   const params = useParams();
-  const { addTask, updateTask, tasks } = useTaskContext();
-  const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
-  const [inputState, setInputState] = useState<TaskItemType>(
-    editMode
-      ? selectedTask
-      : { id: generateUUID(), state: "Ready", name: "", detail: "" }
-  );
+  const editMode = mode === "edit";
   const [showAlert, setShowAlert] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
+  const initialTask = tasks.find((item) => item.id === params.id);
+  const checkIdTask =
+    selectedTask.id === params.id ? selectedTask : initialTask!;
+
+  const getInitialFormValues = () => {
+    if (editMode) {
+      return checkIdTask;
+    } else {
+      return selectedTask;
+    }
+  };
+
+  const [inputState, setInputState] =
+    useState<TaskItemType>(getInitialFormValues);
 
   useEffect(() => {
-    const initialTask = tasks.find((item) => item.id === params.id);
-
-    if (initialTask) {
-      setInputState(initialTask);
+    if (editMode) {
+      const initial = tasks.find((item) => item.id === initialTask!.id);
+      if (initial) {
+        setInputState(initial);
+      }
+      setInputState(selectedTask);
     }
   }, []);
-
   const handleDisabled = () => {
     setDisabled(false);
   };
@@ -44,7 +53,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editMode) {
-      updateTask(selectedTask, inputState);
+      updateTasks(checkIdTask, inputState);
       setDisabled(true);
     } else {
       addTask(inputState);
@@ -53,7 +62,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
   };
 
   const handleCancel = () => {
-    setInputState(selectedTask);
+    setInputState(checkIdTask);
     setDisabled(true);
   };
 

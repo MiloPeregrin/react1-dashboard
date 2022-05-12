@@ -7,7 +7,7 @@ interface ITaskContext {
   filterTasks: (state: TaskStateType) => TaskItemType[];
   forwardTask: (task: TaskItemType) => void;
   reverseTask: (task: TaskItemType) => void;
-  updateTask: (task: TaskItemType, state: TaskItemType) => void;
+  updateTasks: (oldTask: TaskItemType, newTask: TaskItemType) => void;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -30,16 +30,16 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
     });
   };
 
-  const updateTask = (
-    task: TaskItemType,
-    state: TaskItemType | TaskStateType
+  const updateTasks = (
+    oldTask: TaskItemType,
+    newTask: TaskItemType | TaskStateType
   ) => {
     const updatedTasks = tasks.map((item) => {
-      if (item === task) {
-        if (typeof state === "object") {
-          return { ...item, ...state };
+      if (item === oldTask) {
+        if (typeof newTask === "object") {
+          return { ...item, ...newTask };
         } else {
-          return { ...item, state: state };
+          return { ...item, state: newTask };
         }
       }
       return item;
@@ -49,17 +49,17 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
 
   const forwardTask = (task: TaskItemType) => {
     if (task.state === "Ready") {
-      updateTask(task, "In Progress");
+      updateTasks(task, "In Progress");
     } else {
-      updateTask(task, "Finished");
+      updateTasks(task, "Finished");
     }
   };
 
   const reverseTask = (task: TaskItemType) => {
     if (task.state === "Finished") {
-      updateTask(task, "In Progress");
+      updateTasks(task, "In Progress");
     } else {
-      updateTask(task, "Ready");
+      updateTasks(task, "Ready");
     }
   };
 
@@ -71,7 +71,7 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
         filterTasks,
         forwardTask,
         reverseTask,
-        updateTask,
+        updateTasks,
       }}
     >
       {children}

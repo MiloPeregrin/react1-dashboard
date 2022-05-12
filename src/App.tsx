@@ -4,11 +4,15 @@ import { TaskItemType } from "./common/types";
 import Dashboard from "./pages/Dashboard";
 import Form from "./pages/Form";
 import Page from "./pages/Page";
+import { generateUUID } from "./common/utility";
 
 function App() {
-  const [selectedTask, setSelectedTask] = useState<TaskItemType>(
-    {} as TaskItemType
-  );
+  const [selectedTask, setSelectedTask] = useState<TaskItemType>({
+    id: generateUUID(),
+    state: "Ready",
+    name: "",
+    detail: "",
+  });
 
   const onDetail = (task: TaskItemType) => {
     setSelectedTask(task);
