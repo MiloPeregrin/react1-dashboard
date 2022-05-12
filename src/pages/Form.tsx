@@ -18,12 +18,12 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
   const initialTask = tasks.find((item) => item.id === params.id);
-  const checkIdTask =
+  const idCheckedTask =
     selectedTask.id === params.id ? selectedTask : initialTask!;
 
   const getInitialFormValues = () => {
     if (editMode) {
-      return checkIdTask;
+      return idCheckedTask;
     } else {
       return selectedTask;
     }
@@ -41,6 +41,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
       setInputState(selectedTask);
     }
   }, []);
+
   const handleDisabled = () => {
     setDisabled(false);
   };
@@ -53,7 +54,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (editMode) {
-      updateTasks(checkIdTask, inputState);
+      updateTasks(idCheckedTask, inputState);
       setDisabled(true);
     } else {
       addTask(inputState);
@@ -62,7 +63,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
   };
 
   const handleCancel = () => {
-    setInputState(checkIdTask);
+    setInputState(idCheckedTask);
     setDisabled(true);
   };
 
