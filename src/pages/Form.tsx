@@ -38,6 +38,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
       if (initial) {
         setInputState(initial);
       }
+    } else {
       setInputState(selectedTask);
     }
   }, []);
