@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Alert from "../components/Alert";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import { generateUUID } from "../common/utility";
 
 interface IForm {
   mode: "new" | "edit";
@@ -59,10 +60,10 @@ const Form = ({ mode, selectedTask }: IForm) => {
       setDisabled(true);
     } else {
       addTask(inputState);
+      setInputState({ ...selectedTask, id: generateUUID() });
     }
     handleShowAlert();
   };
-
   const handleCancel = () => {
     setInputState(idCheckedTask);
     setDisabled(true);
