@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { useParams } from "react-router-dom";
 import { NewTaskType, TaskItemType, TaskStateType } from "../common/types";
 import { generateUUID } from "../common/utility";
 import initialTasks from "../initialTasks.json";
@@ -33,9 +32,6 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   });
 
   const setFormData = (task: TaskItemType | undefined) => {
-    // const params = useParams();
-    // const currentTask = tasks.find((item) => item.id === params.id);
-    // const initialData = tasks.find((item) => item.id === currentTask!.id);
     if (task != undefined) {
       setInitialFormData(task);
     } else {
@@ -47,15 +43,6 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
       });
     }
   };
-
-  // const resetFormData = () => {
-  //   setInitialFormData({
-  //     id: generateUUID(),
-  //     state: "Ready",
-  //     name: "",
-  //     detail: "",
-  //   });
-  // };
 
   const filterTasks = (state: TaskStateType) => {
     return tasks.filter((t) => t.state === state);

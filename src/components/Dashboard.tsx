@@ -1,4 +1,4 @@
-import { TaskItemType, TaskStateType } from "../common/types";
+import { TaskStateType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Section from "./Section";
 import { Link } from "react-router-dom";
@@ -29,6 +29,3 @@ const Dashboard = ({}: IDashboard) => {
 };
 
 export default Dashboard;
-function setFormData(task: any): void {
-  throw new Error("Function not implemented.");
-}

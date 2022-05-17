@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { TaskItemType, TaskStateType } from "../common/types";
 import Card from "./Card";
 import TaskItem from "./TaskItem";
@@ -16,14 +15,7 @@ const Section = ({ title, tasks }: ISection) => {
         {tasks.map((task) => {
           return (
             <li key={task.id}>
-              <TaskItem
-                task={task}
-                state={title}
-                // onDetail={navigate(`../detail/${task.id}`)}
-                // const onDetail = (task: TaskItemType) => {
-                //   setSelectedTask(task);
-                // };
-              />
+              <TaskItem task={task} state={title} />
             </li>
           );
         })}
