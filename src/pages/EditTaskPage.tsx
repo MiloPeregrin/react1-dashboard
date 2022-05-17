@@ -1,14 +1,29 @@
 import Form from "../components/Form";
 import Page from "../components/Page";
 import { useTaskContext } from "../hooks/useTaskContext";
+import { useParams } from "react-router-dom";
+import { newTaskObject } from "../common/utility";
 
 const EditTaskPage = () => {
-  const { initialFormData } = useTaskContext();
+  const { tasks, initialFormData } = useTaskContext();
+  const params = useParams();
+  console.log("initialFormData", initialFormData);
+
+  const currentTask = tasks.find((item) => item.id === params.id);
+  const initialData = tasks.find((item) => item.id === currentTask?.id);
+
+  const getInitialData = () => {
+    if (initialFormData != newTaskObject) {
+      return initialFormData;
+    } else {
+      return initialData!;
+    }
+  };
 
   return (
     <div>
       <Page showDashboard={false}>
-        <Form mode="edit" initialFormData={initialFormData} />
+        <Form mode="edit" initialFormData={getInitialData()} />
       </Page>
     </div>
   );

@@ -4,8 +4,7 @@ import { useTaskContext } from "../hooks/useTaskContext";
 import Alert from "./Alert";
 import Button from "./Button";
 import Card from "./Card";
-import { generateUUID } from "../common/utility";
-import { useParams } from "react-router-dom";
+import { newTaskObject } from "../common/utility";
 
 interface IForm {
   mode: "new" | "edit";
@@ -13,31 +12,17 @@ interface IForm {
 }
 
 const Form = ({ mode, initialFormData }: IForm) => {
-  const { addTask, updateTasks, tasks } = useTaskContext();
+  const { addTask, updateTasks } = useTaskContext();
   const [formValues, setFormValues] = useState<TaskItemType>(initialFormData);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(
     mode === "edit" ? true : false
   );
   const formId = useId();
-  const params = useParams();
 
   useEffect(() => {
-    setValuesFromParams();
+    setFormValues(initialFormData);
   }, []);
-
-  const getParamValue = () => {
-    const currentTask = tasks.find((item) => item.id === params.id);
-    const initialData = tasks.find((item) => item.id === currentTask?.id);
-    return initialData;
-  };
-
-  const setValuesFromParams = () => {
-    const initialData = getParamValue();
-    if (initialData) {
-      setFormValues(initialData);
-    }
-  };
 
   const handleDisabled = () => {
     setDisabled(false);
@@ -51,27 +36,17 @@ const Form = ({ mode, initialFormData }: IForm) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (mode === "edit") {
-      const initialData = getParamValue();
-      if (initialData) {
-        updateTasks(initialData, formValues);
-      } else {
-        updateTasks(initialFormData, formValues);
-      }
+      updateTasks(initialFormData, formValues);
       setDisabled(true);
     } else {
       addTask(formValues);
-      setFormValues({
-        id: generateUUID(),
-        state: "Ready",
-        name: "",
-        detail: "",
-      });
+      setFormValues(newTaskObject);
     }
     handleShowAlert();
   };
 
   const handleCancel = () => {
-    setValuesFromParams();
+    setFormValues(initialFormData);
     setDisabled(true);
   };
 

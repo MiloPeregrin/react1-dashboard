@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { NewTaskType, TaskItemType, TaskStateType } from "../common/types";
-import { generateUUID } from "../common/utility";
+import { newTaskObject } from "../common/utility";
 import initialTasks from "../initialTasks.json";
 interface ITaskContext {
   tasks: TaskItemType[];
@@ -24,23 +24,13 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   );
   const [initialFormData, setInitialFormData] = useState<
     TaskItemType | NewTaskType
-  >({
-    id: generateUUID(),
-    state: "Ready",
-    name: "",
-    detail: "",
-  });
+  >(newTaskObject);
 
   const setFormData = (task: TaskItemType | undefined) => {
     if (task != undefined) {
       setInitialFormData(task);
     } else {
-      setInitialFormData({
-        id: generateUUID(),
-        state: "Ready",
-        name: "",
-        detail: "",
-      });
+      setInitialFormData(newTaskObject);
     }
   };
 
