@@ -62,7 +62,12 @@ const Form = ({ mode, initialFormData }: IForm) => {
       setDisabled(true);
     } else {
       addTask(formValues);
-      //   setInputState({ ...selectedTask, id: generateUUID() });
+      setFormValues({
+        id: generateUUID(),
+        state: "Ready",
+        name: "",
+        detail: "",
+      });
     }
     handleShowAlert();
   };
