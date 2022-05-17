@@ -1,48 +1,50 @@
-import { useEffect, useState } from "react";
-import { TaskItemType } from "../common/types";
+import { useEffect, useId, useState } from "react";
+import { NewTaskType, TaskItemType } from "../common/types";
 import { useTaskContext } from "../hooks/useTaskContext";
 import { useParams } from "react-router-dom";
-import Alert from "../components/Alert";
-import Button from "../components/Button";
-import Card from "../components/Card";
+import Alert from "./Alert";
+import Button from "./Button";
+import Card from "./Card";
 import { generateUUID } from "../common/utility";
 
 interface IForm {
   mode: "new" | "edit";
-  selectedTask: TaskItemType;
+  initialFormData: TaskItemType | NewTaskType;
 }
 
-const Form = ({ mode, selectedTask }: IForm) => {
+const Form = ({ mode, initialFormData }: IForm) => {
   const { addTask, updateTasks, tasks } = useTaskContext();
-  const params = useParams();
-  const editMode = mode === "edit";
+  const [formValues, setFormValues] = useState<TaskItemType>(
+    initialFormData
+    // selectedTask
+    //   ? selectedTask
+    //   : { id: generateUUID(), state: "Ready", name: "", detail: "" }
+  );
   const [showAlert, setShowAlert] = useState<boolean>(false);
-  const [disabled, setDisabled] = useState<boolean>(editMode ? true : false);
-  const initialTask = tasks.find((item) => item.id === params.id);
-  const idCheckedTask =
-    selectedTask.id === params.id ? selectedTask : initialTask!;
+  const [disabled, setDisabled] = useState<boolean>(
+    mode === "edit" ? true : false
+  );
+  // const params = useParams();
+  const formId = useId();
+  // const initialTask = tasks.find((item) => item.id === params.id);
 
-  const getInitialFormValues = () => {
-    if (editMode) {
-      return idCheckedTask;
-    } else {
-      return selectedTask;
-    }
-  };
+  // const idCheckedTask =
+  //   selectedTask.id === params.id ? selectedTask : initialTask!;
 
-  const [inputState, setInputState] =
-    useState<TaskItemType>(getInitialFormValues);
+  // const getInitialFormValues = () => {
+  //   if (editMode) {
+  //     return idCheckedTask;
+  //   } else {
+  //     return selectedTask;
+  //   }
+  // };
 
-  useEffect(() => {
-    if (editMode) {
-      const initial = tasks.find((item) => item.id === initialTask!.id);
-      if (initial) {
-        setInputState(initial);
-      }
-    } else {
-      setInputState(selectedTask);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const initial = tasks.find((item) => item.id === initialTask!.id);
+  //   if (initial) {
+  //     setInputState(initial);
+  //   }
+  // }, []);
 
   const handleDisabled = () => {
     setDisabled(false);
@@ -55,23 +57,24 @@ const Form = ({ mode, selectedTask }: IForm) => {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (editMode) {
-      updateTasks(idCheckedTask, inputState);
+    if (mode === "edit") {
+      updateTasks(initialFormData, formValues);
       setDisabled(true);
     } else {
-      addTask(inputState);
-      setInputState({ ...selectedTask, id: generateUUID() });
+      addTask(formValues);
+      //   setInputState({ ...selectedTask, id: generateUUID() });
     }
     handleShowAlert();
   };
+
   const handleCancel = () => {
-    setInputState(idCheckedTask);
+    setFormValues(initialFormData);
     setDisabled(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputState((prevState) => ({
+    setFormValues((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -89,11 +92,11 @@ const Form = ({ mode, selectedTask }: IForm) => {
               <label htmlFor="name">Task name: </label>
               <input
                 type="text"
-                id="name"
+                id={formId + "name"}
                 name="name"
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                value={inputState.name}
+                value={formValues.name}
                 onChange={handleChange}
               />
             </div>
@@ -101,16 +104,16 @@ const Form = ({ mode, selectedTask }: IForm) => {
               <label htmlFor="detail">Task detail: </label>
               <input
                 type="text"
-                id="detail"
+                id={formId + "detail"}
                 name="detail"
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                value={inputState.detail}
+                value={formValues.detail}
                 onChange={handleChange}
               />
             </div>
           </div>
-          {editMode &&
+          {mode === "edit" &&
             (disabled ? (
               <div>
                 <Button size="large" onClick={handleDisabled}>
@@ -127,7 +130,7 @@ const Form = ({ mode, selectedTask }: IForm) => {
                 </Button>
               </div>
             ))}
-          {!editMode && (
+          {mode === "new" && (
             <Button type="submit" size="large">
               Add New Task
             </Button>

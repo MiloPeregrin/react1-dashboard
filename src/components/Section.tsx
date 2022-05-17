@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { TaskItemType, TaskStateType } from "../common/types";
 import Card from "./Card";
 import TaskItem from "./TaskItem";
@@ -5,10 +6,9 @@ import TaskItem from "./TaskItem";
 interface ISection {
   title: TaskStateType;
   tasks: TaskItemType[];
-  onDetail: (task: TaskItemType) => void;
 }
 
-const Section = ({ title, tasks, onDetail }: ISection) => {
+const Section = ({ title, tasks }: ISection) => {
   return (
     <Card>
       <p className="font-medium text-xl">{title}</p>
@@ -17,10 +17,12 @@ const Section = ({ title, tasks, onDetail }: ISection) => {
           return (
             <li key={task.id}>
               <TaskItem
-                id={task.id}
                 task={task}
                 state={title}
-                onDetail={onDetail}
+                // onDetail={navigate(`../detail/${task.id}`)}
+                // const onDetail = (task: TaskItemType) => {
+                //   setSelectedTask(task);
+                // };
               />
             </li>
           );
