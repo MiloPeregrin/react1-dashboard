@@ -7,7 +7,6 @@ import { newTaskObject } from "../common/utility";
 const EditTaskPage = () => {
   const { tasks, initialFormData } = useTaskContext();
   const params = useParams();
-  console.log("initialFormData", initialFormData);
 
   const currentTask = tasks.find((item) => item.id === params.id);
   const initialData = tasks.find((item) => item.id === currentTask?.id);
