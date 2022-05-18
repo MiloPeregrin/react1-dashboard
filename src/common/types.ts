@@ -6,10 +6,3 @@ export type TaskItemType = {
   name: string;
   detail: string;
 };
-
-export type NewTaskType = {
-  id: string;
-  state: "Ready";
-  name: "";
-  detail: "";
-};

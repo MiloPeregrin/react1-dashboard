@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { NewTaskType, TaskItemType, TaskStateType } from "../common/types";
-import { newTaskObject } from "../common/utility";
+import { TaskItemType, TaskStateType } from "../common/types";
 import initialTasks from "../initialTasks.json";
 interface ITaskContext {
   tasks: TaskItemType[];
@@ -9,8 +8,6 @@ interface ITaskContext {
   forwardTask: (task: TaskItemType) => void;
   reverseTask: (task: TaskItemType) => void;
   updateTasks: (oldTask: TaskItemType, newTask: TaskItemType) => void;
-  setFormData: (task: TaskItemType | undefined) => void;
-  initialFormData: TaskItemType | NewTaskType;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -22,17 +19,6 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
   const [tasks, setTasks] = useState<TaskItemType[]>(
     initialTasks as TaskItemType[]
   );
-  const [initialFormData, setInitialFormData] = useState<
-    TaskItemType | NewTaskType
-  >(newTaskObject);
-
-  const setFormData = (task: TaskItemType | undefined) => {
-    if (task != undefined) {
-      setInitialFormData(task);
-    } else {
-      setInitialFormData(newTaskObject);
-    }
-  };
 
   const filterTasks = (state: TaskStateType) => {
     return tasks.filter((t) => t.state === state);
@@ -86,8 +72,6 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
         forwardTask,
         reverseTask,
         updateTasks,
-        setFormData,
-        initialFormData,
       }}
     >
       {children}

@@ -1,5 +1,3 @@
-import { NewTaskType } from "./types";
-
 export const generateUUID = () => {
   let d = new Date().getTime(),
     d2 = (performance && performance.now && performance.now() * 1000) || 0;
@@ -14,11 +12,4 @@ export const generateUUID = () => {
     }
     return (c == "x" ? r : (r & 0x7) | 0x8).toString(16);
   });
-};
-
-export const newTaskObject: NewTaskType = {
-  id: generateUUID(),
-  state: "Ready",
-  name: "",
-  detail: "",
 };

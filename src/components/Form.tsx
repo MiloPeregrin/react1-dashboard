@@ -1,14 +1,14 @@
-import { useEffect, useId, useState } from "react";
-import { NewTaskType, TaskItemType } from "../common/types";
+import { useId, useState } from "react";
+import { TaskItemType } from "../common/types";
+import { generateUUID } from "../common/utility";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Alert from "./Alert";
 import Button from "./Button";
 import Card from "./Card";
-import { newTaskObject } from "../common/utility";
 
 interface IForm {
   mode: "new" | "edit";
-  initialFormData: TaskItemType | NewTaskType;
+  initialFormData: TaskItemType;
 }
 
 const Form = ({ mode, initialFormData }: IForm) => {
@@ -19,10 +19,6 @@ const Form = ({ mode, initialFormData }: IForm) => {
     mode === "edit" ? true : false
   );
   const formId = useId();
-
-  useEffect(() => {
-    setFormValues(initialFormData);
-  }, []);
 
   const handleDisabled = () => {
     setDisabled(false);
@@ -39,8 +35,8 @@ const Form = ({ mode, initialFormData }: IForm) => {
       updateTasks(initialFormData, formValues);
       setDisabled(true);
     } else {
-      addTask(formValues);
-      setFormValues(newTaskObject);
+      addTask({ ...formValues, id: generateUUID() });
+      setFormValues(initialFormData);
     }
     handleShowAlert();
   };
