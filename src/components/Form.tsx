@@ -63,7 +63,7 @@ const Form = ({ mode, initialFormData }: IForm) => {
         >
           <div className="space-y-2">
             <div>
-              <label htmlFor="name">Task name: </label>
+              <label htmlFor={formId + "name"}>Task name: </label>
               <input
                 type="text"
                 id={formId + "name"}
@@ -75,7 +75,7 @@ const Form = ({ mode, initialFormData }: IForm) => {
               />
             </div>
             <div>
-              <label htmlFor="detail">Task detail: </label>
+              <label htmlFor={formId + "detail"}>Task detail: </label>
               <input
                 type="text"
                 id={formId + "detail"}
