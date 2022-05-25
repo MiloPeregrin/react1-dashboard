@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import { useForm } from "react-hook-form";
 import { TaskItemType } from "../common/types";
 import { generateUUID } from "../common/utility";
 import { useTaskContext } from "../hooks/useTaskContext";
@@ -12,8 +13,8 @@ interface IForm {
 }
 
 const Form = ({ mode, initialFormData }: IForm) => {
+  const { register, handleSubmit, reset, setValue } = useForm();
   const { addTask, updateTasks } = useTaskContext();
-  const [formValues, setFormValues] = useState<TaskItemType>(initialFormData);
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(
     mode === "edit" ? true : false
@@ -29,36 +30,41 @@ const Form = ({ mode, initialFormData }: IForm) => {
     setTimeout(() => setShowAlert(false), 3000);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (formData: { [k: string]: string }) => {
+    const updatedValues = Object.fromEntries(
+      Object.entries(formData).filter(([_, v]) => v != undefined)
+    );
     if (mode === "edit") {
-      updateTasks(initialFormData, formValues);
+      updateTasks(initialFormData, { ...initialFormData, ...updatedValues });
       setDisabled(true);
     } else {
-      addTask({ ...formValues, id: generateUUID() });
-      setFormValues(initialFormData);
+      addTask({
+        id: generateUUID(),
+        state: "Ready",
+        name: "",
+        detail: "",
+        ...formData,
+      });
+      reset({
+        name: "",
+        detail: "",
+      });
     }
     handleShowAlert();
   };
 
   const handleCancel = () => {
-    setFormValues(initialFormData);
+    //FIXME je lepsi zpusob, jak hromadne zadat setValue?
+    setValue("name", initialFormData.name);
+    setValue("detail", initialFormData.detail);
     setDisabled(true);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
   };
 
   return (
     <div className="flex flex-col items-center w-full">
       <Card>
         <form
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col items-center space-y-3"
         >
           <div className="space-y-2">
@@ -67,11 +73,13 @@ const Form = ({ mode, initialFormData }: IForm) => {
               <input
                 type="text"
                 id={formId + "name"}
-                name="name"
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                value={formValues.name}
-                onChange={handleChange}
+                defaultValue={initialFormData.name}
+                // name="name"
+                // ref={register}
+                //FIXME workaround, napojeni inputu pres ref={register} haze type error
+                {...register("name")}
               />
             </div>
             <div>
@@ -79,11 +87,13 @@ const Form = ({ mode, initialFormData }: IForm) => {
               <input
                 type="text"
                 id={formId + "detail"}
-                name="detail"
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                value={formValues.detail}
-                onChange={handleChange}
+                defaultValue={initialFormData.detail}
+                // name="name"
+                // ref={register}
+                //FIXME workaround, napojeni inputu pres ref={register} haze type error
+                {...register("detail")}
               />
             </div>
           </div>
