@@ -93,7 +93,7 @@ const Form = ({ mode, initialFormData }: IForm) => {
             </div>
             {errors.name && (
               <span className="flex justify-center text-red-600">
-                Name of task is required
+                Name is required
               </span>
             )}
           </div>
