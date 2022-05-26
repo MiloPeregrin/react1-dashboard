@@ -6,3 +6,8 @@ export type TaskItemType = {
   name: string;
   detail: string;
 };
+
+export type FormData = {
+  name: string;
+  detail: string;
+};

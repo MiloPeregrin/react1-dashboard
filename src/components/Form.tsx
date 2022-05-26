@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 import { useForm } from "react-hook-form";
-import { TaskItemType } from "../common/types";
+import { TaskItemType, FormData } from "../common/types";
 import { generateUUID } from "../common/utility";
 import { useTaskContext } from "../hooks/useTaskContext";
 import Alert from "./Alert";
@@ -12,17 +12,11 @@ interface IForm {
   initialFormData: TaskItemType;
 }
 
-type FormData = {
-  name: string;
-  detail: string;
-};
-
 const Form = ({ mode, initialFormData }: IForm) => {
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -47,11 +41,8 @@ const Form = ({ mode, initialFormData }: IForm) => {
   };
 
   const onSubmit = (formData: FormData) => {
-    const updatedValues = Object.fromEntries(
-      Object.entries(formData).filter(([_, v]) => v != undefined)
-    );
     if (mode === "edit") {
-      updateTasks(initialFormData, { ...initialFormData, ...updatedValues });
+      updateTasks(initialFormData, formData);
       setDisabled(true);
     } else {
       addTask({
@@ -59,17 +50,16 @@ const Form = ({ mode, initialFormData }: IForm) => {
         state: "Ready",
         ...formData,
       });
-      reset({
-        name: "",
-        detail: "",
-      });
+      reset();
     }
     handleShowAlert();
   };
 
   const handleCancel = () => {
-    setValue("name", initialFormData.name);
-    setValue("detail", initialFormData.detail);
+    reset({
+      name: initialFormData.name,
+      detail: initialFormData.detail,
+    });
     setDisabled(true);
   };
 
@@ -88,9 +78,6 @@ const Form = ({ mode, initialFormData }: IForm) => {
                 id={formId + "name"}
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                // name="name"
-                // ref={register}
-                //FIXME workaround, napojeni inputu pres ref={register} haze type error
                 {...register("name", { required: true, minLength: 1 })}
               />
             </div>
@@ -101,9 +88,6 @@ const Form = ({ mode, initialFormData }: IForm) => {
                 id={formId + "detail"}
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                // name="name"
-                // ref={register}
-                //FIXME workaround, napojeni inputu pres ref={register} haze type error
                 {...register("detail")}
               />
             </div>

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { TaskItemType, TaskStateType } from "../common/types";
+import { TaskItemType, TaskStateType, FormData } from "../common/types";
 import initialTasks from "../initialTasks.json";
 interface ITaskContext {
   tasks: TaskItemType[];
@@ -7,7 +7,7 @@ interface ITaskContext {
   filterTasks: (state: TaskStateType) => TaskItemType[];
   forwardTask: (task: TaskItemType) => void;
   reverseTask: (task: TaskItemType) => void;
-  updateTasks: (oldTask: TaskItemType, newTask: TaskItemType) => void;
+  updateTasks: (task: TaskItemType, updatedValues: FormData) => void;
 }
 
 const TaskContext = createContext<ITaskContext>(undefined!);
@@ -30,10 +30,10 @@ export const TaskContextProvider = ({ children }: ITaskContextProvider) => {
     });
   };
 
-  const updateTasks = (task: TaskItemType, newTask: TaskItemType) => {
+  const updateTasks = (task: TaskItemType, updatedValues: FormData) => {
     const updatedTasks = tasks.map((item) => {
       if (item === task) {
-        return { ...item, ...newTask };
+        return { ...item, ...updatedValues };
       }
       return item;
     });
