@@ -68,7 +68,6 @@ const Form = ({ mode, initialFormData }: IForm) => {
   };
 
   const handleCancel = () => {
-    //FIXME je lepsi zpusob, jak hromadne zadat setValue?
     setValue("name", initialFormData.name);
     setValue("detail", initialFormData.detail);
     setDisabled(true);
@@ -109,9 +108,9 @@ const Form = ({ mode, initialFormData }: IForm) => {
               />
             </div>
             {errors.name && (
-              <p className="flex justify-center text-red-600">
+              <span className="flex justify-center text-red-600">
                 Name of task is required
-              </p>
+              </span>
             )}
           </div>
           {mode === "edit" &&
