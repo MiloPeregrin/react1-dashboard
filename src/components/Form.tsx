@@ -12,8 +12,24 @@ interface IForm {
   initialFormData: TaskItemType;
 }
 
+type FormData = {
+  name: string;
+  detail: string;
+};
+
 const Form = ({ mode, initialFormData }: IForm) => {
-  const { register, handleSubmit, reset, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      name: `${initialFormData.name}`,
+      detail: `${initialFormData.detail}`,
+    },
+  });
   const { addTask, updateTasks } = useTaskContext();
   const [showAlert, setShowAlert] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(
@@ -30,7 +46,7 @@ const Form = ({ mode, initialFormData }: IForm) => {
     setTimeout(() => setShowAlert(false), 3000);
   };
 
-  const onSubmit = (formData: { [k: string]: string }) => {
+  const onSubmit = (formData: FormData) => {
     const updatedValues = Object.fromEntries(
       Object.entries(formData).filter(([_, v]) => v != undefined)
     );
@@ -41,8 +57,6 @@ const Form = ({ mode, initialFormData }: IForm) => {
       addTask({
         id: generateUUID(),
         state: "Ready",
-        name: "",
-        detail: "",
         ...formData,
       });
       reset({
@@ -75,11 +89,10 @@ const Form = ({ mode, initialFormData }: IForm) => {
                 id={formId + "name"}
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                defaultValue={initialFormData.name}
                 // name="name"
                 // ref={register}
                 //FIXME workaround, napojeni inputu pres ref={register} haze type error
-                {...register("name")}
+                {...register("name", { required: true, minLength: 1 })}
               />
             </div>
             <div>
@@ -89,13 +102,17 @@ const Form = ({ mode, initialFormData }: IForm) => {
                 id={formId + "detail"}
                 className="border-2 border-rose-600 w-64"
                 disabled={disabled}
-                defaultValue={initialFormData.detail}
                 // name="name"
                 // ref={register}
                 //FIXME workaround, napojeni inputu pres ref={register} haze type error
                 {...register("detail")}
               />
             </div>
+            {errors.name && (
+              <p className="flex justify-center text-red-600">
+                Name of task is required
+              </p>
+            )}
           </div>
           {mode === "edit" &&
             (disabled ? (
